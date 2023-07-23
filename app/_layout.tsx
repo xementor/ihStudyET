@@ -4,7 +4,7 @@ import { DarkTheme, DefaultTheme } from "@/constants/Colors"
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme } from 'nativewind'
 import "../main.css";
 import { Provider } from 'react-redux';
 import { store } from "../store/configureStore";
@@ -47,7 +47,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
 
   return (

@@ -7,7 +7,7 @@ import { styled, useColorScheme } from "nativewind";
 const StyledPressable = styled(Pressable)
 const StyledText = styled(Text)
 
-function Test() {
+export default function Test() {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
@@ -17,7 +17,7 @@ function Test() {
     >
       <StyledText
         selectable={false}
-        className="text-slate-100 dark:text-white"
+        className="text-slate-800 dark:text-white"
       >
         {`Try clicking me! ${colorScheme === "dark" ? "🌙" : "🌞"}`}
       </StyledText>
@@ -25,4 +25,4 @@ function Test() {
   );
 }
 
-export default withExpoSnack(Test);
+// export default withExpoSnack(Test);

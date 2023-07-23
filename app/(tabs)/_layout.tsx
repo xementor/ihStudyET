@@ -1,6 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme, Text } from 'react-native';
+import { Pressable } from 'react-native';
 
 import ProgressHeader from '@/components/ProgressHeader';
 import useTheme from '@/constants/theming/useTheme';
@@ -16,13 +16,12 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const { colors } = useTheme()
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.surfaceTint,
+        tabBarActiveTintColor: colors.primary,
       }}>
       <Tabs.Screen
         name="index"
