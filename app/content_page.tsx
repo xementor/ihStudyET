@@ -1,12 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Text, View, FlatList, GestureResponderEvent } from "react-native";
+import { Text, View, FlatList } from "react-native";
 import StyleSheet from "react-native-media-query";
 
-import ProgressBar from "../components/progress_bar";
 import ContentContainer from "../components/content_container";
 import AppButton from "../components/button";
-import { breakPoint } from "../constants/style";
 
 import { Content, ContentType } from "../services/storage/model";
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
@@ -16,6 +13,7 @@ import { cLesson1, cLesson2, cLesson3 } from "../services/storage/c";
 import { toggleTheme } from "../store/theme";
 import { ColorType } from "@/constants/theming/types";
 import useTheme from "@/constants/theming/useTheme";
+import ProgressHeader from "@/components/ProgressHeader";
 
 export const lessons = [cLesson1, cLesson2, cLesson3];
 
@@ -67,29 +65,32 @@ export default function ContentScreen() {
     dispatch(toggleTheme())
   }
 
-  return (
-    <View>
-      <Text>Lets see</Text>
-    </View>
-  );
+  // return (
+  //   <View>
+  //     <Text>Lets see</Text>
+  //   </View>
+  // );
 
   return (
     <View style={styles.contentContainer}>
-      <ProgressBar lessons={lessons} />
+      <View className="w-full h-3">
+        <ProgressHeader />
+      </View>
 
       <View style={styles.contentArea}>
-        <View style={styles.heading}>
-          <Text style={styles.heading_text}>{onePageLesson.title}</Text>
-        </View>
+        <View className="h-full m-4">
+          <View style={styles.heading}>
+            <Text style={styles.heading_text}>{onePageLesson.title}</Text>
+          </View>
 
-        <FlatList
-          data={onePageLesson.contents.slice(0, index)}
-          renderItem={renderItem}
-        />
+          <FlatList
+            data={onePageLesson.contents.slice(0, index)}
+            renderItem={renderItem}
+          />
 
-        <View style={styles.button} dataSet={{ media: ids.button }}>
-          <Text style={{ color: "red" }}>vong cong</Text>
-          <AppButton content="Continue" onPress={onPress} />
+          <View className="flex justify-center items-center w-full">
+            <AppButton content="Continue" onPress={onPress} />
+          </View>
         </View>
       </View>
     </View>
@@ -104,8 +105,6 @@ const getStyles = (color: ColorType) => StyleSheet.create({
     alignItems: "center",
   },
 
-  button: {
-  },
   content: {
     width: "100%",
     alignSelf: "flex-start",

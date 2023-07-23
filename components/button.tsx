@@ -5,6 +5,9 @@ import StyleSheet from 'react-native-media-query';
 import { breakPoint } from '../constants/style';
 import { ColorType } from '@/constants/theming/types';
 import useTheme from '@/constants/theming/useTheme';
+import { styled } from 'nativewind';
+
+const StyledTouchableOpacity = styled(TouchableOpacity)
 
 export enum ButtonType {
   primary = "primary",
@@ -31,18 +34,12 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
   const { styles } = getStyle(color)
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      {/* <View style={[styles.container, containerStyle]} dataSet={{ media: ids.container }}> */}
-      <View
-        style={styles.container}      >
-        {/* <Text style={[styles.text, textStyle]}>{content}</Text> */}
-        <Text
-          style={{
-            color: "red",
-            fontSize: 16
-          }}
-        >{content}</Text>
-      </View>
+    <TouchableOpacity
+      className='w-full mb-2 py-3 flex flex-row justify-center rounded-md'
+      style={{ backgroundColor: color.onBackground }}
+      onPress={onPress}
+    >
+      <Text className='text-lg' style={{ color: color.background }}>Continue</Text>
     </TouchableOpacity>
   );
 };
@@ -51,22 +48,14 @@ export default AppButton;
 
 const getStyle = (color: ColorType) => StyleSheet.create({
   container: {
-    borderColor: color.outline,
+    // borderColor: color.outline,
+    backgroundColor: color.onBackground,
     borderWidth: 1,
-    height: 20,
-    width: 135,
-    borderRadius: 12,
+    height: 40,
+    width: "100%",
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    padding: 15,
-    [breakPoint]: {
-      width: '100%',
-      // backgroundColor: color.primaryContainer,
-    },
+    marginBottom: 20,
   },
-
-  text: {
-    color: color.onSurface,
-    fontSize: 16,
-  }
 });

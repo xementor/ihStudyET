@@ -14,7 +14,8 @@ const StyledIB = styled(IB)
 
 interface IconButtonProps {
   name: React.ComponentProps<typeof StyledFontAwesome>['name'];
-  web?: boolean
+  web?: boolean,
+  style?: string,
 }
 
 function ProgessHeader() {
@@ -22,18 +23,16 @@ function ProgessHeader() {
   const { colors } = useTheme()
   const { lessonIdx } = useAppSelector((state) => state.lesson);
 
-  const IconButton: React.FC<IconButtonProps> = ({ name, web = false }) => {
-    const className = clsx('p-2', web && 'hidden android:hidden ios:hidden md:flex',)
+  const IconButton: React.FC<IconButtonProps> = ({ name, web = false, style }) => {
+    const className = clsx('p-2', web && 'hidden android:hidden ios:hidden md:flex', style)
     return (
-      <View className="ml-1 lg:ml-6">
-        <StyledIB
-          icon={name}
-          size={30}
-          iconColor={colors.onSurface}
-          className={className}
-          onPress={() => { }}
-        />
-      </View>
+      <StyledIB
+        icon={name}
+        size={25}
+        iconColor={colors.onSurface}
+        className={className}
+        onPress={() => { }}
+      />
 
       // <Pressable className="ml-1 lg:ml-6 active:bg-blue-300">
       //   <StyledFontAwesome className={className} name={name} size={25} color={colors.onSurface} />
@@ -44,7 +43,9 @@ function ProgessHeader() {
   return (
     <View className="pt-3 web:pt-0 h-20 flex flex-row justify-between items-center" style={{ backgroundColor: colors.surfaceContainerHighest }}>
 
-      <IconButton name="close" />
+      <View className="ml-1 lg:ml-6">
+        <IconButton name="close" />
+      </View>
       <View className='flex flex-row w-[70%] lg:w-[50%] justify-between items-center'>
 
         <IconButton name="chevron-left" web={true} />
@@ -73,9 +74,11 @@ function ProgessHeader() {
         <IconButton name="chevron-right" web={true} />
       </View>
 
-      <View className='flex flex-row items-center'>
-        <Text className="font-bold text-lg" style={{ color: colors.onSurface }}>0</Text>
-        <IconButton name="bolt" />
+      <View className='ml-3 flex flex-row items-center'>
+        <Text className="mr-[-20] lg:mr-[-10] text-base" style={{ color: colors.onSurface }}>0</Text>
+        <View className="mr-1 lg:mr-6">
+          <IconButton name="bolt" />
+        </View>
       </View>
     </View>
   );
