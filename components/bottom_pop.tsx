@@ -2,13 +2,14 @@ import * as React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import color from "../colors";
 import ContentContainer from "./content_container";
 import AppButton from "./button";
 import { incrementIndex } from "../store/sublesson";
 import { deselectOption, offBottomSheetVisibility } from "../store/question";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { Question } from "../services/storage/model";
+import useTheme from "@/constants/theming/useTheme";
+import { ColorType } from "@/constants/theming/types";
 
 interface BottomPopProps {
   variant?: "secondary" | "warning";
@@ -16,9 +17,15 @@ interface BottomPopProps {
 }
 
 const BottomPop = ({ variant = "warning", question }: BottomPopProps) => {
+  const { colors: color } = useTheme()
+
+  const SecenderyStyles = getSeconderyStyle(color)
+  const WarningStyles = getWarningStyles(color)
+
   const { selectedOption, isSelected } = useAppSelector(
     (state) => state.question
   );
+
   const dispatch = useAppDispatch();
 
   let headingMessage = "Oh!...";
@@ -77,7 +84,7 @@ const BottomPop = ({ variant = "warning", question }: BottomPopProps) => {
   );
 };
 
-const WarningStyles = StyleSheet.create({
+const getWarningStyles = (color: ColorType) => StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: color.errorContainer,
@@ -97,29 +104,31 @@ const WarningStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-});
+})
 
-const SecenderyStyles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: color.secondaryContainer,
-    padding: 10,
-  },
+function getSeconderyStyle(color: ColorType) {
+  return StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: color.secondaryContainer,
+      padding: 10,
+    },
 
-  header: {
-    paddingBottom: 10,
-    fontSize: 20,
-    color: color.onSecondaryContainer,
-  },
-  close: {
-    color: color.onSecondaryContainer,
-  },
-  nav: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  bottomContainer: {},
-});
+    header: {
+      paddingBottom: 10,
+      fontSize: 20,
+      color: color.onSecondaryContainer,
+    },
+    close: {
+      color: color.onSecondaryContainer,
+    },
+    nav: {
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    bottomContainer: {},
+  });
 
+}
 export default BottomPop;

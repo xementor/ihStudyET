@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Text, View } from 'dripsy';
-import color from '../colors';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import StyleSheet from 'react-native-media-query';
-import { breakPoint } from '../const/style';
+import { breakPoint } from '../constants/style';
+import { ColorType } from '@/constants/theming/types';
+import useTheme from '@/constants/theming/useTheme';
 
 export enum ButtonType {
   primary = "primary",
@@ -19,6 +19,8 @@ interface AppButtonProps {
 }
 
 const AppButton = ({ content, type, onPress }: AppButtonProps) => {
+  const { colors: color } = useTheme()
+
   let containerStyle;
   let textStyle;
   if (type == ButtonType.primary) {
@@ -26,26 +28,16 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
     textStyle = { "color": color.onPrimary }
 
   }
+  const { styles } = getStyle(color)
 
   return (
     <TouchableOpacity onPress={onPress}>
       {/* <View style={[styles.container, containerStyle]} dataSet={{ media: ids.container }}> */}
       <View
-        sx={{
-          borderColor: "$outline",
-          borderWidth: 1,
-          height: 20,
-          width: 135,
-          borderRadius: 12,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 15,
-          backgroundColor: "$background"
-        }}
-      >
+        style={styles.container}      >
         {/* <Text style={[styles.text, textStyle]}>{content}</Text> */}
         <Text
-          sx={{
+          style={{
             color: "red",
             fontSize: 16
           }}
@@ -57,7 +49,7 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
 
 export default AppButton;
 
-const { ids, styles } = StyleSheet.create({
+const getStyle = (color: ColorType) => StyleSheet.create({
   container: {
     borderColor: color.outline,
     borderWidth: 1,

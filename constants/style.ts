@@ -1,0 +1,1 @@
+export const breakPoint = "@media (max-width: 770px)"

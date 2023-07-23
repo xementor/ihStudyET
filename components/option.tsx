@@ -1,6 +1,7 @@
+import { ColorType } from '@/constants/theming/types';
+import useTheme from '@/constants/theming/useTheme';
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import color from '../colors';
 
 interface OptionProps {
   option: string,
@@ -8,8 +9,13 @@ interface OptionProps {
   handleSelection: () => void;
 }
 
-const Option = ({ option, variant = "default",handleSelection }: OptionProps) => {
+const Option = ({ option, variant = "default", handleSelection }: OptionProps) => {
+  const { colors: color } = useTheme()
+  const DefaultStyles = getDefaultStyles(color)
+  const SelectedStyles = getSelectedStyles(color)
+
   const styles = variant == "default" ? DefaultStyles : SelectedStyles;
+
 
   const handlePress = () => {
     handleSelection()
@@ -25,14 +31,14 @@ const Option = ({ option, variant = "default",handleSelection }: OptionProps) =>
 };
 
 
-const DefaultStyles = StyleSheet.create({
+const getDefaultStyles = (color: ColorType) => StyleSheet.create({
   container: {
     borderColor: color.outline,
     padding: 10,
     borderWidth: 1,
     marginHorizontal: 10,
     marginBottom: 10,
-    flex:1,
+    flex: 1,
     flexWrap: "wrap"
 
 
@@ -45,7 +51,7 @@ const DefaultStyles = StyleSheet.create({
   }
 });
 
-const SelectedStyles = StyleSheet.create({
+const getSelectedStyles = (color: ColorType) => StyleSheet.create({
   container: {
     borderColor: color.outline,
     backgroundColor: color.secondary,

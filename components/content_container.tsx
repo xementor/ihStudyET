@@ -1,6 +1,6 @@
+import useTheme from '@/constants/theming/useTheme';
 import * as React from 'react';
 import { Text, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import color from '../colors';
 
 interface ContentContainerProps {
   varient?: 'primary' | 'default',
@@ -9,6 +9,8 @@ interface ContentContainerProps {
 }
 
 const ContentContainer = ({ content, style, varient = 'default' }: ContentContainerProps) => {
+
+  const { colors: color } = useTheme()
 
   const styles = StyleSheet.create({
     container: {

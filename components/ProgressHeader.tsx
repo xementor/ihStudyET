@@ -1,4 +1,4 @@
-import { TouchableWithoutFeedback, View, Text } from 'react-native'
+import { TouchableWithoutFeedback, View, Text, Pressable } from 'react-native'
 import { withExpoSnack, styled } from 'nativewind';
 import colors from "tailwindcss/colors";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -13,10 +13,12 @@ function ProgessHeader() {
   const { lessonIdx } = useAppSelector((state) => state.lesson);
   return (
     <View className="pt-3 web:pt-0 h-20 bg-white flex flex-row justify-between items-center dark:bg-slate-900">
-      <StyledFontAwesome className='ml-3 lg:ml-6' name='close' size={25} color={colors.blue[500]} />
+      <Pressable className="hover:bg-red-400 active:bg-blue-300">
+        <StyledFontAwesome className='ml-3 lg:ml-6' name='close' size={25} color={colors.blue[500]} />
+      </Pressable>
 
       <View className='flex flex-row w-[70%] lg:w-[50%] justify-between items-center'>
-        <StyledFontAwesome className='android:hidden ios:hidden pr-4' name='backward' size={25} color={colors.blue[500]} />
+        <StyledFontAwesome className='android:hidden ios:hidden pr-4 sm:hidden' name='backward' size={25} color={colors.blue[500]} />
         <View className='flex flex-row w-full'>
 
           {
@@ -43,8 +45,10 @@ function ProgessHeader() {
       </View>
 
       <View className='flex flex-row'>
-        <Text>0</Text>
-        <StyledFontAwesome className='mr-3 ml-1' name='bolt' size={25} color={colors.blue[500]} />
+        <Text className="font-bold">0</Text>
+        <Pressable className="hover:bg-red-400 active:bg-blue-300">
+          <StyledFontAwesome className='mr-3 ml-1' name='bolt' size={25} color={colors.blue[500]} />
+        </Pressable>
 
       </View>
     </View>

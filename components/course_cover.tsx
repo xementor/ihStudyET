@@ -1,15 +1,18 @@
+import { ColorType } from '@/constants/theming/types';
+import useTheme from '@/constants/theming/useTheme';
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
-import color from '../colors';
 
 interface CourseCoverProps { }
 
 const CourseCover = (props: CourseCoverProps) => {
+  const { colors: color } = useTheme()
+  const styles = getStyles(color)
   return (
     <Pressable style={styles.pressable}>
       <View style={styles.container}>
         <Image
-          source={require('../assets/favicon.png')}
+          source={require('../assets/images/favicon.png')}
           style={{ width: 120, height: 120, }} />
       </View>
       <View style={styles.textContainer}>
@@ -21,7 +24,7 @@ const CourseCover = (props: CourseCoverProps) => {
 
 export default CourseCover;
 
-const styles = StyleSheet.create({
+const getStyles = (color: ColorType) => StyleSheet.create({
   pressable: {
     width: 176,
     height: 224,

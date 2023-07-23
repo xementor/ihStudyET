@@ -1,9 +1,9 @@
 import React from 'react';
-import { BottomSheet, Button, ListItem } from '@rneui/themed';
+// import { BottomSheet, Button, ListItem } from '@rneui/themed';
 import { StyleSheet } from 'react-native';
-import {useAppDispatch, useAppSelector} from "../app/hook";
-import {hideSheet} from "../store/contentsBottomSheet";
-import {SafeAreaProvider} from "react-native-safe-area-context";
+import { useAppDispatch, useAppSelector } from "../app/hook";
+import { hideSheet } from "../store/contentsBottomSheet";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type BottomSheetComponentProps = {};
 
@@ -27,7 +27,7 @@ const ContentsBottomSheet: React.FunctionComponent<BottomSheetComponentProps> = 
 
     return (
         <SafeAreaProvider>
-            <BottomSheet modalProps={{}} isVisible={isVisible} onBackdropPress={handleBackdropPress}>
+            {/* <BottomSheet modalProps={{}} isVisible={isVisible} onBackdropPress={handleBackdropPress}>
                 {list.map((l, i) => (
                     <ListItem
                         key={i}
@@ -39,7 +39,7 @@ const ContentsBottomSheet: React.FunctionComponent<BottomSheetComponentProps> = 
                         </ListItem.Content>
                     </ListItem>
                 ))}
-            </BottomSheet>
+            </BottomSheet> */}
         </SafeAreaProvider>
     );
 };
