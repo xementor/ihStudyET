@@ -1,13 +1,17 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import ThemeProvider from '@/constants/theming/ThemeProvider'
-import { DarkTheme, DefaultTheme } from "@/constants/Colors"
+import { useEffect } from 'react';
+import { Pressable, Text } from 'react-native'
+import { Provider } from 'react-redux';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 import { useColorScheme } from 'nativewind'
-import "../main.css";
-import { Provider } from 'react-redux';
+import ThemeProvider from '@/constants/theming/ThemeProvider'
+import { DarkTheme, DefaultTheme } from "@/constants/Colors"
 import { store } from "../store/configureStore";
+import "../main.css";
+import { ScoreComponent } from '@/components/ProgressHeader';
+import useTheme from '@/constants/theming/useTheme';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,6 +52,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { colorScheme } = useColorScheme();
+  const { colors } = useTheme()
 
 
   return (
@@ -57,6 +62,19 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           <Stack.Screen name="content_page" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="quize" options={{ headerShown: false }} /> */}
+          <Stack.Screen name="courses" options={{ headerShown: false, }} />
+          <Stack.Screen
+            name="course"
+            options={{
+              presentation: 'modal',
+              headerRight: () => (
+                <Pressable>
+                  <ScoreComponent color={colors.onSurface} />
+                </Pressable>
+              )
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </Provider>

@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { IconButton as IB, MD3Colors } from 'react-native-paper';
 import { showSheet } from '@/store/contentsBottomSheet';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ColorType } from '@/constants/theming/types';
 
 const StyledFontAwesome = styled(FontAwesome)
 const StyledIB = styled(IB)
@@ -102,19 +103,7 @@ function ProgessHeader() {
         <IconButton name="chevron-right" web={true} />
       </View>
 
-      <View className='ml-3 flex flex-row items-center'>
-        <Text className=" text-base" style={{ color: colors.onSurface }}>0</Text>
-        <View className="mr-1 lg:mr-6">
-          {/* <IconButton name="bolt" /> */}
-          <MaterialIcons
-            name="bolt"
-            size={25}
-            color={colors.onSurface}
-            className='p-2 md:p-3'
-          // style={{ padding: }}
-          />
-        </View>
-      </View>
+      <ScoreComponent color={colors.onSurface} />
     </View >
   );
 }
@@ -122,7 +111,28 @@ function ProgessHeader() {
 export default withExpoSnack(ProgessHeader);
 
 
-function dispatch(arg0: any) {
+
+
+interface ScoreComponentProps {
+  color: string;
+}
+export const ScoreComponent: React.FC<ScoreComponentProps> = ({ color }) => {
+  return <View className='ml-3 flex flex-row items-center'>
+    <Text className=" text-base" style={{ color: color }}>0</Text>
+    <View className="mr-1 lg:mr-6">
+      {/* <IconButton name="bolt" /> */}
+      <MaterialIcons
+        name="bolt"
+        size={25}
+        color={color}
+        className='p-2 md:p-3' />
+    </View>
+  </View>;
+}
+
+
+
+function dispatch(arg0: { payload: undefined; type: "bottomSheetOpen/showSheet"; }) {
   throw new Error('Function not implemented.');
 }
 
