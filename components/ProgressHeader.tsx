@@ -9,6 +9,7 @@ export const lessons = [cLesson1, cLesson2, cLesson3];
 import clsx from 'clsx';
 import { IconButton as IB, MD3Colors } from 'react-native-paper';
 import { showSheet } from '@/store/contentsBottomSheet';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const StyledFontAwesome = styled(FontAwesome)
 const StyledIB = styled(IB)
@@ -102,9 +103,16 @@ function ProgessHeader() {
       </View>
 
       <View className='ml-3 flex flex-row items-center'>
-        <Text className="mr-[-20] lg:mr-[-10] text-base" style={{ color: colors.onSurface }}>0</Text>
+        <Text className=" text-base" style={{ color: colors.onSurface }}>0</Text>
         <View className="mr-1 lg:mr-6">
-          <IconButton name="bolt" />
+          {/* <IconButton name="bolt" /> */}
+          <MaterialIcons
+            name="bolt"
+            size={25}
+            color={colors.onSurface}
+            className='p-2 md:p-3'
+          // style={{ padding: }}
+          />
         </View>
       </View>
     </View >
