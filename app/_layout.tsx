@@ -62,17 +62,13 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           <Stack.Screen name="content_page" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="quize" options={{ headerShown: false }} /> */}
+          <Stack.Screen name="test_page" options={{ headerShown: false }} />
           <Stack.Screen name="courses" options={{ headerShown: false, }} />
           <Stack.Screen
             name="course"
             options={{
               presentation: 'modal',
-              headerRight: () => (
-                <Pressable>
-                  <ScoreComponent color={colors.onSurface} />
-                </Pressable>
-              )
+              headerShown: false,
             }}
           />
         </Stack>

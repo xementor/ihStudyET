@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import CourseCover from "../components/course_cover";
 import Nav from "../components/web/navbar"
 import useTheme from "@/constants/theming/useTheme";
@@ -11,8 +11,8 @@ const CoursesScreen = () => {
     courseContainer: {
       flexDirection: "row",
       gap: 20,
+      flexGrow: 1,
       flexWrap: "wrap"
-
     },
     heading: {
       fontSize: 25,
@@ -23,14 +23,16 @@ const CoursesScreen = () => {
 
   return (
     <>
-      <Nav />
+      {Platform.OS === "web" &&
+        <Nav />
+      }
 
       <View style={{ marginHorizontal: 25, }}>
         <View style={{ marginTop: 50, marginBottom: 30, }}>
           <Text style={styles.heading}>Your course history</Text>
         </View>
 
-        <View style={styles.courseContainer}>
+        <View className="flex flex-row flex-wrap">
           <CourseCover />
           <CourseCover />
           <CourseCover />

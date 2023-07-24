@@ -30,6 +30,7 @@ const getStyles = (color: ColorType) => StyleSheet.create({
     height: 224,
     backgroundColor: color.surfaceContainerLow,
     borderRadius: 10,
+    margin: 10,
 
   },
   container: {
