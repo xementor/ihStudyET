@@ -35,7 +35,7 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
 
   return (
     <TouchableOpacity
-      className='w-full mb-2 py-3 flex flex-row justify-center rounded-md'
+      className='w-full mb-5 py-2 flex flex-row justify-center rounded-md'
       style={{ backgroundColor: color.onBackground }}
       onPress={onPress}
     >

@@ -100,7 +100,7 @@ export default function ContentScreen() {
 
 const getStyles = (color: ColorType) => StyleSheet.create({
   contentContainer: {
-    backgroundColor: color.surfaceContainerLowest,
+    backgroundColor: color.surfaceContainerHighest,
     flex: 1,
     alignItems: "center",
   },

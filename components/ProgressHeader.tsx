@@ -8,6 +8,7 @@ import useTheme from '@/constants/theming/useTheme';
 export const lessons = [cLesson1, cLesson2, cLesson3];
 import clsx from 'clsx';
 import { IconButton as IB, MD3Colors } from 'react-native-paper';
+import { showSheet } from '@/store/contentsBottomSheet';
 
 const StyledFontAwesome = styled(FontAwesome)
 const StyledIB = styled(IB)
@@ -22,6 +23,13 @@ function ProgessHeader() {
 
   const { colors } = useTheme()
   const { lessonIdx } = useAppSelector((state) => state.lesson);
+  const { index: subLessonIdx } = useAppSelector(state => state.subLesson)
+
+  const handlePress = () => {
+    dispatch(showSheet())
+    // dispatch(setLessonIndex({lessonIdx: index}))
+    // dispatch(resetIndex())
+  }
 
   const IconButton: React.FC<IconButtonProps> = ({ name, web = false, style }) => {
     const className = clsx('p-2', web && 'hidden android:hidden ios:hidden md:flex', style)
@@ -41,7 +49,7 @@ function ProgessHeader() {
   }
 
   return (
-    <View className="pt-3 web:pt-0 h-20 flex flex-row justify-between items-center" style={{ backgroundColor: colors.surfaceContainerHighest }}>
+    <View className="pt-3 web:pt-0 h-20 flex flex-row justify-between items-center" style={{ backgroundColor: colors.surfaceContainerLowest }}>
 
       <View className="ml-1 lg:ml-6">
         <IconButton name="close" />
@@ -54,15 +62,34 @@ function ProgessHeader() {
           {
             lessons.map((subLesson, index) => {
               const width = (subLesson.contents.length / 20) * 100
+              const progressPercentage = Math.floor(((subLessonIdx + 1) / subLesson.contents.length) * 100)
               return (
                 <TouchableWithoutFeedback key={index} >
-                  <View className="border-2 border-slate-200  flex items-center justify-center bg-green-700 rounded-md h-3"
-                    style={{
-                      width: `${width}%`,
-                      marginRight: index == lessons.length - 1 ? 0 : 2
-                    }}
+                  <View className="border-2 border-slate-200 bg-slate-50 rounded-md h-3"
+                    style={
+                      [
+                        {
+                          width: `${width}%`,
+                          marginRight: index == lessons.length - 1 ? 0 : 2,
+                        },
+                        index < lessonIdx ?
+                          {
+                            backgroundColor: colors.primary
+                          } : null,
+                      ]
+                    }
                   >
-                    {/* <View className='bg-blue-300 w-[80%] h-[80%] rounded-md m-2 ' /> */}
+                    <View
+                      style={[
+                        index === lessonIdx ?
+                          {
+                            width: `${progressPercentage}%`,
+                            height: "100%",
+                            backgroundColor: colors.secondary,
+                            borderRadius: 6
+                          } : null,
+                      ]}
+                    />
                   </View>
 
                 </TouchableWithoutFeedback>
@@ -80,10 +107,14 @@ function ProgessHeader() {
           <IconButton name="bolt" />
         </View>
       </View>
-    </View>
+    </View >
   );
 }
 
 export default withExpoSnack(ProgessHeader);
 
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}
 
