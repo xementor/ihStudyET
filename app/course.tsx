@@ -1,13 +1,14 @@
-import ProgressHeader, { ScoreComponent } from "@/components/ProgressHeader";
+import { ScoreComponent } from "@/components/ProgressHeader";
 import { course } from "@/services/storage/course";
 import { SubLesson } from "@/services/storage/model";
 import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
-import clsx from "clsx";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { View, Text, Pressable, Animated, ScrollView } from "react-native";
+import { View, Text, Pressable, Animated, ScrollView, Platform } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Nav from "@/components/web/navbar";
+
 
 
 export default function CourseScreen() {
@@ -15,7 +16,6 @@ export default function CourseScreen() {
   const HEADER_MAX_HEIGHT = 250; // Set your desired maximum height for the top bar
   const HEADER_MIN_HEIGHT = 170;  // Set your desired minimum height for the top bar
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -39,54 +39,113 @@ export default function CourseScreen() {
     extrapolate: 'clamp',
   });
 
-  return (
-    <View className="h-full">
-      <Animated.View className="w-full pt-3 web:pt-0 px-2" style={{ height: headerHeight, elevation: 8 }}>
-        <View className="flex flex-row justify-between">
-          <IconButton icon="chevron-left" />
-          <ScoreComponent color="black" />
-        </View>
 
-        <View className="px-4" style={{ elevation: 8, }}>
-          <View
-            className="flex flex-row items-center justify-between py-2"
-          >
-            <Animated.Text
-              className="font-bold flex-1"
-              style={{ fontSize: fontSize }}
-            >
-              {course.title}
-            </Animated.Text>
-            <Animated.View className=" bg-slate-500 rounded-md" style={{ height: squareSize, width: squareSize }} />
+  if (Platform.OS === 'web') {
+    return (
+      <View>
+        <Nav />
+
+        <View className="flex flex-row">
+
+          <View className="p-5 mr-10">
+            <View className="flex w-[500px] border-slate-300 border-2">
+              <View className="w-full pt-3 web:pt-0 px-2" style={{ elevation: 8 }}>
+
+                <View className="px-4" style={{ elevation: 8, }}>
+                  <View
+                    className="flex flex-row items-center justify-between py-2"
+                  >
+                    <Text
+                      className="font-bold flex-1 text-3xl"
+                    >
+                      {course.title}
+                    </Text>
+                    <View className=" bg-slate-500 rounded-md h-20 w-20" />
+                  </View>
+                  <View className="h-5 bg-blue-300 rounded-3xl mt-1"></View>
+                </View>
+              </View>
+              <CourseCoverScrollPart
+                courseDescription={course.description}
+              />
+            </View>
           </View>
-          <View className="h-5 bg-blue-300 rounded-3xl mt-1"></View>
+          <View className="mt-40">
+
+
+            {
+              course.chapters.map((subChapter, i) =>
+                <ChapterItem chapterNo="1" key={i} chapter={subChapter} />
+              )
+            }
+
+            <View className="h-60 bg-slate-400" />
+
+
+          </View >
+
         </View>
 
-      </Animated.View>
+      </View>
+
+    );
+  }
 
 
-      <ScrollView
-        className=""
-        style={{ flex: 1 }}
-        contentContainerStyle={{}}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-      >
-
-        <CourseCoverScrollPart
-          courseDescription={course.description}
-        />
+  return (
+    <View>
 
 
-        {
-          course.chapters.map((subChapter, i) =>
-            <ChapterItem chapterNo="1" key={i} chapter={subChapter} />
-          )
-        }
+      <View className="h-full md:m-auto">
+        <Animated.View className="md:hidden w-full pt-3 web:pt-0 px-2" style={{ height: headerHeight, elevation: 8 }}>
+          <View className="flex flex-row justify-between">
+            <IconButton icon="chevron-left" />
+            <ScoreComponent color="black" />
+          </View>
 
-      </ScrollView>
-    </View >
+          <View className="px-4" style={{ elevation: 8, }}>
+            <View
+              className="flex flex-row items-center justify-between py-2"
+            >
+              <Animated.Text
+                className="font-bold flex-1"
+                style={{ fontSize: fontSize }}
+              >
+                {course.title}
+              </Animated.Text>
+              <Animated.View className=" bg-slate-500 rounded-md" style={{ height: squareSize, width: squareSize }} />
+            </View>
+            <View className="h-5 bg-blue-300 rounded-3xl mt-1"></View>
+          </View>
+
+        </Animated.View>
+
+
+        <ScrollView
+          className=""
+          style={{ flex: 1 }}
+          contentContainerStyle={{}}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        >
+
+          <CourseCoverScrollPart
+            courseDescription={course.description}
+          />
+
+
+          {
+            course.chapters.map((subChapter, i) =>
+              <ChapterItem chapterNo="1" key={i} chapter={subChapter} />
+            )
+          }
+
+        </ScrollView>
+      </View >
+    </View>
+
   )
+
 }
 
 interface ChapterItemProps {
@@ -102,6 +161,13 @@ interface ChapterItemProps {
 
 const ChapterItem: React.FC<ChapterItemProps> = ({ chapterNo, chapter }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const getState = (i: number) => {
+    if (i == 1) return subLessonState.current
+    else if (i < 1) return subLessonState.completed
+    else return subLessonState.notCompleted
+
+  }
 
   const handlePress = () => setExpanded(!expanded);
   return (
@@ -121,8 +187,9 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ chapterNo, chapter }) => {
         </View>
       </Pressable>
       {
+
         expanded && chapter.subChapter.map((subChapter, i) =>
-          <SubChapterItem subChapter={subChapter} key={i} state={i == 1 ? subLessonState.current : subLessonState.completed} />
+          <SubChapterItem subChapter={subChapter} key={i} state={getState(i)} />
 
         )
 
