@@ -3,8 +3,8 @@ import { course } from "@/services/storage/course";
 import { SubLesson } from "@/services/storage/model";
 import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
 import { Link } from "expo-router";
-import { useState } from "react";
-import { View, Text, Pressable, Animated, ScrollView, Platform } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { View, Text, Pressable, Animated, ScrollView, Platform, FlatList } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Nav from "@/components/web/navbar";
@@ -16,11 +16,24 @@ export default function CourseScreen() {
   const HEADER_MAX_HEIGHT = 250; // Set your desired maximum height for the top bar
   const HEADER_MIN_HEIGHT = 170;  // Set your desired minimum height for the top bar
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+  const scrollViewRef = useRef<ScrollView>(null);
+
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: false }
+    { useNativeDriver: false },
   );
+
+
+  const handleScrollEnd = (event: any) => {
+    const offsetY = event.nativeEvent.contentOffset.y; // Get the current scroll position
+    if (offsetY < HEADER_SCROLL_DISTANCE) {
+      const nearestPos = offsetY > HEADER_SCROLL_DISTANCE / 2 ? HEADER_SCROLL_DISTANCE : 0;
+      scrollViewRef.current?.scrollTo({ y: nearestPos, animated: true });
+
+    }
+    // scrollViewRef.current?.scrollToEnd()
+  };
 
   const headerHeight = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -33,23 +46,49 @@ export default function CourseScreen() {
     outputRange: [46, 30], // Adjust font size values as needed
     extrapolate: 'clamp',
   });
-  const squareSize = scrollY.interpolate({
+  const opacity = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE], // Adjust the input range based on when you want the animation to occur
-    outputRange: [80, 0],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  const boxSize = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE], // Adjust the input range based on when you want the animation to occur
+    outputRange: [80, 1],
     extrapolate: 'clamp',
   });
 
 
   if (Platform.OS === 'web') {
+    // return (
+    //   <View>
+    //     <ScrollView>
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //       <View className="h-60 w-full p-5 bg-red-200" />
+    //     </ScrollView>
+
+    //   </View>
+
+    // )
     return (
-      <View>
+      <ScrollView>
         <Nav />
 
-        <View className="flex flex-row">
+        <View className="sm:m-auto md:m-0 md:p-5 flex md:flex-row justify-center md:justify-start">
 
-          <View className="p-5 mr-10">
-            <View className="flex w-[500px] border-slate-300 border-2">
-              <View className="w-full pt-3 web:pt-0 px-2" style={{ elevation: 8 }}>
+          <View className="md:m-10 ">
+            <View className="flex md:w-[500px] border-slate-300 border-2">
+              <View className="pt-3 web:pt-0 px-2" style={{ elevation: 8 }}>
 
                 <View className="px-4" style={{ elevation: 8, }}>
                   <View
@@ -70,23 +109,15 @@ export default function CourseScreen() {
               />
             </View>
           </View>
-          <View className="mt-40">
-
-
-            {
-              course.chapters.map((subChapter, i) =>
-                <ChapterItem chapterNo="1" key={i} chapter={subChapter} />
-              )
-            }
-
-            <View className="h-60 bg-slate-400" />
-
-
-          </View >
+          <FlatList
+            data={course.chapters}
+            renderItem={({ item, index }) => <ChapterItem chapterNo={(index + 1).toString()} chapter={item} />}
+            keyExtractor={(item, index) => index.toString()} // Assuming you don't have unique IDs in the data.
+          />
 
         </View>
 
-      </View>
+      </ScrollView>
 
     );
   }
@@ -96,14 +127,14 @@ export default function CourseScreen() {
     <View>
 
 
-      <View className="h-full md:m-auto">
-        <Animated.View className="md:hidden w-full pt-3 web:pt-0 px-2" style={{ height: headerHeight, elevation: 8 }}>
+      <View className="h-full md:mx-auto">
+        <Animated.View className=" w-full pt-5 web:pt-0 px-2 text-3xl" style={{ elevation: 5 }}>
           <View className="flex flex-row justify-between">
             <IconButton icon="chevron-left" />
             <ScoreComponent color="black" />
           </View>
 
-          <View className="px-4" style={{ elevation: 8, }}>
+          <View className="px-4 pb-5 bottom-2" style={{ elevation: 8, }}>
             <View
               className="flex flex-row items-center justify-between py-2"
             >
@@ -113,7 +144,7 @@ export default function CourseScreen() {
               >
                 {course.title}
               </Animated.Text>
-              <Animated.View className=" bg-slate-500 rounded-md" style={{ height: squareSize, width: squareSize }} />
+              <Animated.View className=" bg-slate-500 rounded-md w-20 h-20" style={{ opacity: opacity }} />
             </View>
             <View className="h-5 bg-blue-300 rounded-3xl mt-1"></View>
           </View>
@@ -123,9 +154,11 @@ export default function CourseScreen() {
 
         <ScrollView
           className=""
+          ref={scrollViewRef}
           style={{ flex: 1 }}
           contentContainerStyle={{}}
           onScroll={handleScroll}
+          onMomentumScrollEnd={handleScrollEnd}
           scrollEventThrottle={16}
         >
 
@@ -297,7 +330,7 @@ const CourseCover: React.FC<CourseCoverProps> = ({ courseName }) => {
 
 const CourseCoverScrollPart: React.FC<{ courseDescription: string }> = ({ courseDescription }) => (
   <View className="px-6">
-    <Text className="text-base py-6">{courseDescription}</Text>
+    <Text className="text-base py-2">{courseDescription}</Text>
 
     <View className="flex flex-row justify-between items-center">
       <View className="flex flex-row items-center">

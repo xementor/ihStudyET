@@ -22,12 +22,11 @@ const Nav = () => {
 
   return (
     <>
-      <View style={styles.navContainer} dataSet={{ media: ids.navContainer }}>
+      {/* <View style={styles.navContainer} dataSet={{ media: ids.navContainer }}> */}
+      <View className='flex flex-row px-2 sm:px-16 justify-between items-center'>
         {/* <View sx={{ ...styles.navContainer, backgroundColor: "$error" }} dataSet={{ media: ids.navContainer }}> */}
 
-        <View style={styles.logo}>
-          Logo
-        </View>
+        <View style={styles.logo} />
 
         <View style={styles.navItemContainer}>
           <NavItem />
@@ -35,7 +34,7 @@ const Nav = () => {
         </View>
 
 
-        <View style={styles.search}>Search</View>
+        <View style={styles.search} />
         <MaterialCommunityIcons size={24} accessibilityHint='close' name='menu' color={color.onSurface} />
 
       </View>
