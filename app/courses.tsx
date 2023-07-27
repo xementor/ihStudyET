@@ -17,9 +17,9 @@ const CoursesScreen = () => {
         <StreakBoard />
         <Text className="text-2xl font-bold my-4">Your course history</Text>
 
-        <View className="flex flex-row flex-wrap">
-          <CourseCover hasButton={true} />
-        </View>
+        {/* <View className="flex flex-row flex-wrap"> */}
+        <CourseCover hasButton={true} />
+        {/* </View> */}
       </View>
     </>
   );
