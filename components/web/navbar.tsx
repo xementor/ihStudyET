@@ -7,39 +7,46 @@ import { View, Text } from 'react-native'
 import { ColorType } from '@/constants/theming/types';
 import useTheme from '@/constants/theming/useTheme';
 
+
+
 const Nav = () => {
   const { colors: color } = useTheme()
   const { styles, ids } = getStyles(color)
 
-  function NavItem() {
+  function NavItem({ name }: { name: string }) {
     return (
       <View style={styles.navItem}>
-        <MaterialCommunityIcons size={24} accessibilityHint='close' name='home' color={color.onSurface} />
-        <Text style={{ color: color.onSurface }}>Home</Text>
+        <MaterialCommunityIcons size={24} accessibilityHint='close' name={name == "Course" ? "book" : "home"} color={color.onSurface} />
+        <Text style={{ color: color.onSurface }}>{name}</Text>
       </View>
     );
   }
 
+
   return (
     <>
-      {/* <View style={styles.navContainer} dataSet={{ media: ids.navContainer }}> */}
       <View className='flex flex-row px-2 sm:px-16 justify-between items-center'>
-        {/* <View sx={{ ...styles.navContainer, backgroundColor: "$error" }} dataSet={{ media: ids.navContainer }}> */}
-
-        <View style={styles.logo} />
+        <Text
+          style={styles.logo}
+          className='w-20 h-8 rounded-lg sm:w-36 text-center'
+        >
+          Text
+        </Text>
 
         <View style={styles.navItemContainer}>
-          <NavItem />
-          <NavItem />
+          <NavItem name="Home" />
+          <NavItem name="Course" />
         </View>
 
 
-        <View style={styles.search} />
+        <View style={styles.search} className='' />
         <MaterialCommunityIcons size={24} accessibilityHint='close' name='menu' color={color.onSurface} />
 
       </View>
     </>);
 };
+
+
 
 const getStyles = (color: ColorType) => StyleSheet.create({
   navContainer: {
@@ -54,11 +61,9 @@ const getStyles = (color: ColorType) => StyleSheet.create({
     }
   },
   logo: {
-    height: 30,
-    width: 170,
+
     backgroundColor: color.surfaceContainerHighest,
-    borderRadius: 10,
-    marginRight: 20,
+
 
   },
   navItemContainer: {

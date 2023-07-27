@@ -32,14 +32,9 @@ export default function CourseScreen() {
       scrollViewRef.current?.scrollTo({ y: nearestPos, animated: true });
 
     }
-    // scrollViewRef.current?.scrollToEnd()
   };
 
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, HEADER_SCROLL_DISTANCE],
-    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    extrapolate: 'clamp',
-  });
+
 
   const fontSize = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -60,26 +55,6 @@ export default function CourseScreen() {
 
 
   if (Platform.OS === 'web') {
-    // return (
-    //   <View>
-    //     <ScrollView>
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full m-5 p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //       <View className="h-60 w-full p-5 bg-red-200" />
-    //     </ScrollView>
-
-    //   </View>
-
-    // )
     return (
       <ScrollView>
         <Nav />
