@@ -1,13 +1,14 @@
+import { useRef, useState } from "react";
+import { View, Text, Pressable, Animated, ScrollView, Platform, FlatList } from "react-native";
+import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Link } from "expo-router";
+import { IconButton } from "react-native-paper";
+
+import Nav from "@/components/web/NavBar";
 import { ScoreComponent } from "@/components/ProgressHeader";
 import { course } from "@/services/storage/course";
 import { SubLesson } from "@/services/storage/model";
-import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
-import { Link } from "expo-router";
-import { useEffect, useRef, useState } from "react";
-import { View, Text, Pressable, Animated, ScrollView, Platform, FlatList } from "react-native";
-import { IconButton, List } from "react-native-paper";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Nav from "@/components/web/NavBar";
 
 
 
@@ -274,7 +275,7 @@ const SubChapterItem: React.FC<LessonItemProps> = ({ subChapter, state }) => {
     <View className="pl-7">
       <View className="w-1 h-6 bg-slate-400 ml-10" />
 
-      < Link href="/test" asChild >
+      < Link href="/content_page" asChild >
         <View className="flex flex-row items-center p-2 bg-slate-100 ">
 
           {
