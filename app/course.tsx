@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable, Animated, ScrollView, Platform, FlatList } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Nav from "@/components/web/navbar";
+import Nav from "@/components/web/NavBar";
 
 
 

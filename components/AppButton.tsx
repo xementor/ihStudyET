@@ -39,7 +39,7 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
       style={{ backgroundColor: color.onBackground }}
       onPress={onPress}
     >
-      <Text className='text-lg' style={{ color: color.background }}>Continue</Text>
+      <Text className='text-lg' style={{ color: color.background }}>{content}</Text>
     </TouchableOpacity>
   );
 };

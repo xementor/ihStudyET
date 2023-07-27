@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import ContentContainer from "./content_container";
-import AppButton from "./button";
+import AppButton from "./AppButton";
 import { incrementIndex } from "../store/sublesson";
 import { deselectOption, offBottomSheetVisibility } from "../store/question";
 import { useAppDispatch, useAppSelector } from "../app/hook";

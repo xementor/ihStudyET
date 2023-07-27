@@ -3,7 +3,7 @@ import { Text, View, FlatList } from "react-native";
 import StyleSheet from "react-native-media-query";
 
 import ContentContainer from "../components/content_container";
-import AppButton from "../components/button";
+import AppButton from "../components/AppButton";
 
 import { Content, ContentType } from "../services/storage/model";
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
