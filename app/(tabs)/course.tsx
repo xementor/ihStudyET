@@ -62,8 +62,8 @@ export default function CourseScreen() {
 
         <View className="sm:m-auto md:m-0 md:p-5 flex md:flex-row justify-center md:justify-start">
 
-          <View className="md:m-10 ">
-            <View className="flex md:w-[500px] border-slate-300 border-2">
+          <View className="md:m-3 lg:m-10 ">
+            <View className="flex md:w-[400px] lg:w-[500px] border-slate-300 border-2">
               <View className="pt-3 web:pt-0 px-2" style={{ elevation: 8 }}>
 
                 <View className="px-4" style={{ elevation: 8, }}>
@@ -85,11 +85,13 @@ export default function CourseScreen() {
               />
             </View>
           </View>
-          <FlatList
-            data={course.chapters}
-            renderItem={({ item, index }) => <ChapterItem chapterNo={(index + 1).toString()} chapter={item} />}
-            keyExtractor={(item, index) => index.toString()} // Assuming you don't have unique IDs in the data.
-          />
+          <View className="md:flex-1">
+            <FlatList
+              data={course.chapters}
+              renderItem={({ item, index }) => <ChapterItem chapterNo={(index + 1).toString()} chapter={item} />}
+              keyExtractor={(item, index) => index.toString()} // Assuming you don't have unique IDs in the data.
+            />
+          </View>
 
         </View>
 
@@ -273,7 +275,7 @@ const SubChapterItem: React.FC<LessonItemProps> = ({ subChapter, state }) => {
   }
   return (
     <View className="pl-7">
-      <View className="w-1 h-6 bg-slate-400 ml-10" />
+      <View className="w-1 h-6 bg-slate-400 ml-10 sm" />
 
       < Link href="/content_page" asChild >
         <View className="flex flex-row items-center p-2 bg-slate-100 ">

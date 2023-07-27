@@ -6,6 +6,7 @@ import { View, Text } from 'react-native'
 
 import { ColorType } from '@/constants/theming/types';
 import useTheme from '@/constants/theming/useTheme';
+import { Link } from 'expo-router';
 
 
 
@@ -15,17 +16,17 @@ const Nav = () => {
 
   function NavItem({ name }: { name: string }) {
     return (
-      <View style={styles.navItem}>
+      <Link href="/(tabs)/course" style={styles.navItem}>
         <MaterialCommunityIcons size={24} accessibilityHint='close' name={name == "Course" ? "book" : "home"} color={color.onSurface} />
         <Text style={{ color: color.onSurface }}>{name}</Text>
-      </View>
+      </Link>
     );
   }
 
 
   return (
     <>
-      <View className='flex flex-row px-2 sm:px-16 justify-between items-center'>
+      <View className='my-4 flex flex-row px-2 sm:px-16 justify-between items-center'>
         <Text
           style={styles.logo}
           className='w-20 h-8 rounded-lg sm:w-36 text-center'
@@ -33,7 +34,7 @@ const Nav = () => {
           Text
         </Text>
 
-        <View style={styles.navItemContainer}>
+        <View className='hidden sm:flex sm:flex-row'>
           <NavItem name="Home" />
           <NavItem name="Course" />
         </View>

@@ -13,7 +13,7 @@ const CoursesScreen = () => {
       {Platform.OS === "web" &&
         <Nav />
       }
-      <View className="p-2">
+      <View className="p-2 md:p-10">
         <StreakBoard />
         <Text className="text-2xl font-bold my-4">Your course history</Text>
 

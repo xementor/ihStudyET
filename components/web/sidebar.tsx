@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { lessons } from "../../app/content_page";
+import { lessons } from "../../app/content";
 import useTheme from "@/constants/theming/useTheme";
 
 interface SideBarProps { }

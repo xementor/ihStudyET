@@ -7,7 +7,7 @@ import AppButton from "../components/AppButton";
 
 import { Content, ContentType } from "../services/storage/model";
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
-import { useAppSelector, useAppDispatch } from "../app/hook";
+import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
 import { cLesson1, cLesson2, cLesson3 } from "../services/storage/c";
 import { toggleTheme } from "../store/theme";

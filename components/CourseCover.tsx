@@ -12,7 +12,7 @@ const CourseCover = ({ hasButton }: CourseCoverProps) => {
   return (
     <Link href="/course" asChild >
       <Pressable
-        className='p-5 rounded-md border-slate-300 border-2'
+        className='p-5 rounded-md border-slate-300 border-2 max-w-sm'
       >
         <View className='h-[150px] bg-slate-500'>
           <Image className='w-full'
@@ -27,9 +27,7 @@ const CourseCover = ({ hasButton }: CourseCoverProps) => {
         </View>
 
         {hasButton &&
-          <Link href="/course" asChild >
-            <AppButton content='Resume course' />
-          </Link>
+          <AppButton content='Resume course' />
         }
 
       </Pressable>
