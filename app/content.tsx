@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from "react-native";
 import StyleSheet from "react-native-media-query";
 
 import ContentContainer from "../components/content_container";
@@ -9,10 +9,6 @@ import { Content, ContentType } from "../services/storage/model";
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
 import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
-import { cLesson1, cLesson2, cLesson3 } from "../services/storage/c";
-import { toggleTheme } from "../store/theme";
-import { ColorType } from "@/constants/theming/types";
-import useTheme from "@/constants/theming/useTheme";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 
 
@@ -20,6 +16,8 @@ import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 
 export default function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
 
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
@@ -40,6 +38,9 @@ export default function ContentScreen() {
       return;
     }
     dispatch(incrementIndex());
+
+    console.log(containerHeight)
+    scrollViewRef.current?.scrollToEnd({ animated: true })
   }
 
 
@@ -64,38 +65,47 @@ export default function ContentScreen() {
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
-    const isReachingEnd = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-
-    setShowButton(isReachingEnd);
+    const isHide = (contentOffset.y + layoutMeasurement.height) > (contentSize.height - 100)
+    setShowButton(isHide);
   };
 
 
+
+
+
+  function handleContentSizeChange(w: number, h: number): void {
+    console.log(w, h)
+  }
+
   return (
     <View className="flex-1 items-center bg-slate-100">
+
       <View className="w-full h-3 z-10">
         <ProgressHeader />
       </View>
 
+      <View className="h-full w-full sm:w-2/3 md:w-1/2">
 
+        <ScrollView className="px-2 bg-red-100"
+          onScroll={handleScroll}
+          ref={scrollViewRef}
 
-      <View className="bg-red-100 h-full w-full">
-        <ScrollView className="" >
-          <View className="mt-20 mb-3">
+        >
+          <View className="mt-20 mb-3 ml-2">
             <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
           </View>
-
-
           {onePageLesson.contents.slice(0, index).map((item, index) => {
             return <ContentContainer content={item.content.text} key={index} />
           })}
-
-          {/* {showButton && */}
-          {/* } */}
         </ScrollView>
-        <View className="flex justify-center  items-center flex-1 absolute bottom-5">
+
+        {showButton && <View className="absolute bottom-2 w-full px-2">
           <AppButton content="Continue" onPress={onPress} />
         </View>
+        }
+
       </View>
+
     </View>
   );
 
