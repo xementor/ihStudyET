@@ -13,9 +13,10 @@ import { cLesson1, cLesson2, cLesson3 } from "../services/storage/c";
 import { toggleTheme } from "../store/theme";
 import { ColorType } from "@/constants/theming/types";
 import useTheme from "@/constants/theming/useTheme";
-import ProgressHeader from "@/components/ProgressHeader";
+import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 
-export const lessons = [cLesson1, cLesson3];
+
+
 
 export default function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
@@ -23,8 +24,8 @@ export default function ContentScreen() {
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
 
-  const { colors: color } = useTheme()
-  const { styles, ids } = getStyles(color)
+
+
 
   const onePageLesson = lessons[lessonIdx];
 
@@ -58,9 +59,6 @@ export default function ContentScreen() {
     };
   }, [lessonIdx]);
 
-  const renderItem = ({ item }: { item: Content }) => (
-    <ContentContainer content={item.content.text} />
-  );
 
 
 
@@ -73,26 +71,28 @@ export default function ContentScreen() {
 
 
   return (
-    <View style={[styles.contentContainer, { shadowOffset: { width: 0, height: 2 }, elevation: 5 }]}>
+    <View className="flex-1 items-center bg-slate-100">
       <View className="w-full h-3 z-10">
         <ProgressHeader />
       </View>
 
-      <View className="m-4 h-full">
-        <View style={styles.contentArea} >
-          <View style={styles.heading}>
-            <Text style={styles.heading_text}>{onePageLesson.title}</Text>
+
+
+      <View className="bg-red-100 h-full w-full">
+        <ScrollView className="" >
+          <View className="mt-20 mb-3">
+            <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
           </View>
 
-          <FlatList
-            data={onePageLesson.contents.slice(0, index)}
-            renderItem={renderItem}
-          />
+
+          {onePageLesson.contents.slice(0, index).map((item, index) => {
+            return <ContentContainer content={item.content.text} key={index} />
+          })}
 
           {/* {showButton && */}
           {/* } */}
-        </View>
-        <View className="flex justify-center items-center w-full  absolute bottom-5">
+        </ScrollView>
+        <View className="flex justify-center  items-center flex-1 absolute bottom-5">
           <AppButton content="Continue" onPress={onPress} />
         </View>
       </View>
@@ -101,47 +101,3 @@ export default function ContentScreen() {
 
 }
 
-const getStyles = (color: ColorType) => StyleSheet.create({
-  contentContainer: {
-    backgroundColor: color.surfaceContainerHighest,
-    flex: 1,
-    alignItems: "center",
-  },
-
-  content: {
-    width: "100%",
-    alignSelf: "flex-start",
-    flex: 1,
-  },
-
-  heading: {
-    marginTop: 70,
-    marginBottom: 10,
-  },
-
-  heading_text: {
-    color: color.onSurface,
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  container: {
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-
-  sidebarLeftContainer: {
-    backgroundColor: color.surfaceDim,
-    flex: 1,
-  },
-  sidebarRight: {
-    backgroundColor: color.surfaceDim,
-    flex: 1,
-  },
-  contentArea: {
-    width: "100%",
-    maxWidth: 540,
-    flex: 1,
-    marginVertical: 10,
-  },
-});

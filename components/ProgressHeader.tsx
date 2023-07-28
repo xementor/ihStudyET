@@ -5,12 +5,14 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { cLesson1, cLesson2, cLesson3 } from "../services/storage/c";
 import { useAppSelector } from '@/app/hook';
 import useTheme from '@/constants/theming/useTheme';
-export const lessons = [cLesson1, cLesson2, cLesson3];
 import clsx from 'clsx';
 import { IconButton as IB, MD3Colors } from 'react-native-paper';
 import { showSheet } from '@/store/contentsBottomSheet';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ColorType } from '@/constants/theming/types';
+
+
+export const lessons = [cLesson1, cLesson2, cLesson3];
 
 const StyledFontAwesome = styled(FontAwesome)
 const StyledIB = styled(IB)
