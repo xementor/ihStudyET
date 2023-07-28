@@ -56,10 +56,12 @@ function ProgessHeader() {
       <View className="ml-1 lg:ml-6">
         <IconButton name="close" />
       </View>
-      <View className='flex flex-row w-[70%] lg:w-[50%] justify-between items-center'>
+
+      <View className='flex flex-row w-2/3 lg:w-1/2 justify-between items-center'>
+        {/* <View className='flex flex-row items-center'> */}
 
         <IconButton name="chevron-left" web={true} />
-        <View className='flex flex-row w-full'>
+        <View className='flex flex-row flex-1'>
 
           {
             lessons.map((subLesson, index) => {
@@ -67,7 +69,7 @@ function ProgessHeader() {
               const progressPercentage = Math.floor(((subLessonIdx + 1) / subLesson.contents.length) * 100)
               return (
                 <TouchableWithoutFeedback key={index} >
-                  <View className="border-2 border-slate-200 bg-slate-50 rounded-md h-3"
+                  <View className="flex-shrink border-2 border-slate-200 bg-slate-50 rounded-md h-3"
                     style={
                       [
                         {

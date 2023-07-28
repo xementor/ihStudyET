@@ -10,7 +10,7 @@ interface CourseCoverProps {
 const CourseCover = ({ hasButton }: CourseCoverProps) => {
 
   return (
-    <Link href="/course" asChild >
+    <Link href="/content" asChild >
       <Pressable
         className='p-5 rounded-md border-slate-300 border-2 max-w-sm'
       >

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Text, View, FlatList } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
 import StyleSheet from "react-native-media-query";
 
 import ContentContainer from "../components/content_container";
@@ -15,12 +15,13 @@ import { ColorType } from "@/constants/theming/types";
 import useTheme from "@/constants/theming/useTheme";
 import ProgressHeader from "@/components/ProgressHeader";
 
-export const lessons = [cLesson1, cLesson2, cLesson3];
+export const lessons = [cLesson1, cLesson3];
 
 export default function ContentScreen() {
+  const [showButton, setShowButton] = useState(true);
+
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
-  const { isDark } = useAppSelector(state => state.theme)
 
   const { colors: color } = useTheme()
   const { styles, ids } = getStyles(color)
@@ -61,24 +62,24 @@ export default function ContentScreen() {
     <ContentContainer content={item.content.text} />
   );
 
-  function handleToggleTheme(): void {
-    dispatch(toggleTheme())
-  }
 
-  // return (
-  //   <View>
-  //     <Text>Lets see</Text>
-  //   </View>
-  // );
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    const isReachingEnd = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+
+    setShowButton(isReachingEnd);
+  };
+
 
   return (
-    <View style={styles.contentContainer}>
-      <View className="w-full h-3">
+    <View style={[styles.contentContainer, { shadowOffset: { width: 0, height: 2 }, elevation: 5 }]}>
+      <View className="w-full h-3 z-10">
         <ProgressHeader />
       </View>
 
-      <View style={styles.contentArea}>
-        <View className="h-full m-4">
+      <View className="m-4 h-full">
+        <View style={styles.contentArea} >
           <View style={styles.heading}>
             <Text style={styles.heading_text}>{onePageLesson.title}</Text>
           </View>
@@ -88,9 +89,11 @@ export default function ContentScreen() {
             renderItem={renderItem}
           />
 
-          <View className="flex justify-center items-center w-full">
-            <AppButton content="Continue" onPress={onPress} />
-          </View>
+          {/* {showButton && */}
+          {/* } */}
+        </View>
+        <View className="flex justify-center items-center w-full  absolute bottom-5">
+          <AppButton content="Continue" onPress={onPress} />
         </View>
       </View>
     </View>
