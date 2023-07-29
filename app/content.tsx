@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent } from "react-native";
+import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, Pressable, GestureResponderEvent } from "react-native";
 import StyleSheet from "react-native-media-query";
 
 import ContentContainer from "../components/content_container";
@@ -10,12 +10,13 @@ import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
 import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
-import { styled } from "nativewind";
+import { styled, withExpoSnack } from "nativewind";
+import clsx from "clsx";
 
 
 
 
-export default function ContentScreen() {
+function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
   const scrollViewRef = useRef<ScrollView>(null);
   const [containerHeight, setContainerHeight] = useState<number>(0);
@@ -109,6 +110,12 @@ export default function ContentScreen() {
 }
 
 function Card() {
+  const [selectedOption, selectOption] = useState<number>()
+
+  function handlePres(event: GestureResponderEvent, i: number): void {
+    selectOption(i)
+    // alert(i)
+  }
 
   return (
     <View className="bg-slate-200 p-2">
@@ -117,12 +124,7 @@ function Card() {
 
 
         {[0, 1, 2].map((v, i) => (
-          <View className="flex-row items-center my-1">
-            <View className="border-2 border-slate-400 p-1 rounded-full mr-2">
-              <View className="bg-black rounded-full w-4 h-4" />
-            </View>
-            <Text>The Welcome message display once</Text>
-          </View>
+          <CardOption key={i} selected={i == selectedOption} handlePress={(ev) => handlePres(ev, i)} />
         ))
         }
 
@@ -151,12 +153,52 @@ function CardButton({ type = "outline", content, style }: CardButtonProps) {
   if (type == "outline") commonStyle = commonStyle + "border-2 border-slate-400"
   else commonStyle += "bg-black text-white"
   return (
-    <View className={`flex justify-center items-start ${style}`} >
+    <Pressable className={
+      clsx(
+        `flex justify-center items-start ${style}`,
+        "active:bg-red-100"
+      )
+    } >
       <Text
         className={commonStyle}
       >{content}
       </Text>
-    </View>
+    </Pressable>
   )
 }
 
+type CardOptionProps = { selected: boolean, handlePress: (event: GestureResponderEvent) => void }
+function CardOption({ selected, handlePress }: CardOptionProps) {
+  const [hovered, setHovered] = useState(false)
+
+
+  return (
+    <Pressable
+      onHoverIn={() => setHovered(true)}
+      onHoverOut={() => setHovered(false)}
+      onPress={handlePress}
+      className={
+        clsx(
+          "flex-row items-center my-1  active:bg-red-200 p-2",
+          hovered && "bg-slate-300",
+          selected && "border-0"
+        )
+      }
+    >
+      <View className="border-2 border-slate-400 p-1 h-6 w-6 rounded-full mr-2 flex justify-center items-center">
+        <View className={
+          clsx(
+            "bg-black rounded-full w-4 h-4",
+            !selected && "hidden"
+
+          )
+        }
+        />
+      </View>
+      <Text className="">The Welcome message display once</Text>
+    </Pressable>
+  )
+}
+
+
+export default withExpoSnack(ContentScreen);
