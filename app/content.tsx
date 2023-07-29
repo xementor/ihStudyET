@@ -10,6 +10,7 @@ import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
 import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
+import { styled } from "nativewind";
 
 
 
@@ -70,13 +71,6 @@ export default function ContentScreen() {
   };
 
 
-
-
-
-  function handleContentSizeChange(w: number, h: number): void {
-    console.log(w, h)
-  }
-
   return (
     <View className="flex-1 items-center bg-slate-100">
 
@@ -86,7 +80,7 @@ export default function ContentScreen() {
 
       <View className="h-full w-full sm:w-2/3 md:w-1/2">
 
-        <ScrollView className="px-2 bg-red-100"
+        <ScrollView className="px-2"
           onScroll={handleScroll}
           ref={scrollViewRef}
 
@@ -94,6 +88,9 @@ export default function ContentScreen() {
           <View className="mt-20 mb-3 ml-2">
             <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
           </View>
+
+          <Card />
+
           {onePageLesson.contents.slice(0, index).map((item, index) => {
             return <ContentContainer content={item.content.text} key={index} />
           })}
@@ -109,5 +106,57 @@ export default function ContentScreen() {
     </View>
   );
 
+}
+
+function Card() {
+
+  return (
+    <View className="bg-slate-200 p-2">
+      <Text className="text-base py-2">What is the output of modifing the program to `print (message + message)` ?</Text>
+      <View className="py-2">
+
+
+        {[0, 1, 2].map((v, i) => (
+          <View className="flex-row items-center my-1">
+            <View className="border-2 border-slate-400 p-1 rounded-full mr-2">
+              <View className="bg-black rounded-full w-4 h-4" />
+            </View>
+            <Text>The Welcome message display once</Text>
+          </View>
+        ))
+        }
+
+      </View>
+
+
+      <View className="flex-row">
+        <CardButton type="background" content="Submit" style="mr-2" />
+        <CardButton content="Explaination" />
+      </View>
+
+
+    </View>
+  )
+}
+
+type CardButtonProps = {
+  type?: "outline" | "background",
+  content: string,
+  style?: String
+}
+
+function CardButton({ type = "outline", content, style }: CardButtonProps) {
+
+  let commonStyle = "text-base font-bold flex-nowrap p-2 rounded-lg "
+  if (type == "outline") commonStyle = commonStyle + "border-2 border-slate-400"
+  else commonStyle += "bg-black text-white"
+  return (
+    <View className={`flex justify-center items-start ${style}`} >
+      <Text
+        className={commonStyle}
+      >{content}
+      </Text>
+    </View>
+  )
 }
 
