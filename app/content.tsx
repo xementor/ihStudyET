@@ -12,6 +12,7 @@ import { incrementLessonIdx } from "../store/lessons";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 import { styled, withExpoSnack } from "nativewind";
 import clsx from "clsx";
+import CardQuiz from "@/components/CardQuiz";
 
 
 
@@ -90,7 +91,7 @@ function ContentScreen() {
             <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
           </View>
 
-          <Card />
+          <CardQuiz />
 
           {onePageLesson.contents.slice(0, index).map((item, index) => {
             return <ContentContainer content={item.content.text} key={index} />
@@ -109,96 +110,7 @@ function ContentScreen() {
 
 }
 
-function Card() {
-  const [selectedOption, selectOption] = useState<number>()
 
-  function handlePres(event: GestureResponderEvent, i: number): void {
-    selectOption(i)
-    // alert(i)
-  }
-
-  return (
-    <View className="bg-slate-200 p-2">
-      <Text className="text-base py-2">What is the output of modifing the program to `print (message + message)` ?</Text>
-      <View className="py-2">
-
-
-        {[0, 1, 2].map((v, i) => (
-          <CardOption key={i} selected={i == selectedOption} handlePress={(ev) => handlePres(ev, i)} />
-        ))
-        }
-
-      </View>
-
-
-      <View className="flex-row">
-        <CardButton type="background" content="Submit" style="mr-2" />
-        <CardButton content="Explaination" />
-      </View>
-
-
-    </View>
-  )
-}
-
-type CardButtonProps = {
-  type?: "outline" | "background",
-  content: string,
-  style?: String
-}
-
-function CardButton({ type = "outline", content, style }: CardButtonProps) {
-
-  let commonStyle = "text-base font-bold flex-nowrap p-2 rounded-lg "
-  if (type == "outline") commonStyle = commonStyle + "border-2 border-slate-400"
-  else commonStyle += "bg-black text-white"
-  return (
-    <Pressable className={
-      clsx(
-        `flex justify-center items-start ${style}`,
-        "active:bg-red-100"
-      )
-    } >
-      <Text
-        className={commonStyle}
-      >{content}
-      </Text>
-    </Pressable>
-  )
-}
-
-type CardOptionProps = { selected: boolean, handlePress: (event: GestureResponderEvent) => void }
-function CardOption({ selected, handlePress }: CardOptionProps) {
-  const [hovered, setHovered] = useState(false)
-
-
-  return (
-    <Pressable
-      onHoverIn={() => setHovered(true)}
-      onHoverOut={() => setHovered(false)}
-      onPress={handlePress}
-      className={
-        clsx(
-          "flex-row items-center my-1  active:bg-red-200 p-2",
-          hovered && "bg-slate-300",
-          selected && "border-0"
-        )
-      }
-    >
-      <View className="border-2 border-slate-400 p-1 h-6 w-6 rounded-full mr-2 flex justify-center items-center">
-        <View className={
-          clsx(
-            "bg-black rounded-full w-4 h-4",
-            !selected && "hidden"
-
-          )
-        }
-        />
-      </View>
-      <Text className="">The Welcome message display once</Text>
-    </Pressable>
-  )
-}
 
 
 export default withExpoSnack(ContentScreen);
