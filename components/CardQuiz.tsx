@@ -2,36 +2,48 @@ import clsx from "clsx"
 import { withExpoSnack } from "nativewind"
 import { useState } from "react"
 import { GestureResponderEvent, Pressable, View, Text } from "react-native"
+import _ from 'lodash';
 
 function CardQuiz() {
-  const [selectedOption, selectOption] = useState<number>(-1)
   const [isFlipped, setFlipped] = useState<boolean>(false)
-  const [selectionCorrect, setSelection] = useState<boolean>(false)
-  const [clickedSubmit, setClickSubmit] = useState<boolean>(false)
+  const [isOptionCorrect, setSelection] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false)
+  const [options, setOptions] = useState<number[]>([])
 
-  const correctAnserIndex = 1
+  const correctOptions = [2]
 
   function handlePres(event: GestureResponderEvent, i: number): void {
-    if (clickedSubmit) return;
-    selectOption(i)
-    // alert(i)
+    if (submitted) return;
+    if (correctOptions.length > 1) {
+      setOptions((prevOptions) => {
+        const index = prevOptions.indexOf(i);
+        if (index !== -1) {
+          return prevOptions.filter((item) => item !== i);
+        } else {
+          return [...prevOptions, i];
+        }
+      });
+    }
+    else {
+      setOptions([i])
+    }
   }
   function handleButtonPress(event: GestureResponderEvent): void {
     setFlipped(!isFlipped)
   }
 
   function handleSubmit(event: GestureResponderEvent): void {
-    setClickSubmit(true)
-    if (selectedOption != correctAnserIndex) {
-      setSelection(false)
-    } else {
+    setSubmitted(true)
+    if (_.isEqual(options, correctOptions)) {
       setSelection(true)
+    } else {
+      setSelection(false)
     }
   }
 
-  function renderCorrect() {
-    if (clickedSubmit) {
-      if (selectionCorrect) {
+  function renderResult() {
+    if (submitted) {
+      if (isOptionCorrect) {
         return <Text className="text-base p-3 font-bold">Correct</Text>
 
       }
@@ -51,7 +63,13 @@ function CardQuiz() {
 
 
             {[0, 1, 2].map((v, i) => (
-              <CardOption disabled={clickedSubmit} key={i} selected={i == selectedOption} handlePress={(ev) => handlePres(ev, i)} />
+              <CardOption
+                disabled={submitted}
+                key={i}
+                selected={options.indexOf(i) != -1}
+                multiChoice={correctOptions.length > 1}
+                handlePress={(ev) => handlePres(ev, i)}
+              />
             ))
             }
 
@@ -60,17 +78,17 @@ function CardQuiz() {
 
 
 
-          <View className={!clickedSubmit ? "flex-row" : "flex-col"}>
+          <View className={!submitted ? "flex-row" : "flex-col"}>
             {
-              !clickedSubmit &&
+              !submitted &&
               <CardButton
                 handlePress={handleSubmit}
-                type={selectedOption == -1 ? "disable" : "background"}
+                type={_.isEmpty(options) ? "disable" : "background"}
                 content="Submit"
                 style="mr-2"
               />
             }
-            {renderCorrect()}
+            {renderResult()}
             <CardButton content="Explaination" handlePress={handleButtonPress} />
           </View>
 
@@ -125,9 +143,10 @@ function CardButton({ type = "outline", content, style, handlePress }: CardButto
 type CardOptionProps = {
   selected: boolean,
   handlePress: (event: GestureResponderEvent) => void,
-  disabled?: boolean
+  disabled?: boolean,
+  multiChoice: boolean
 }
-function CardOption({ selected, handlePress, disabled }: CardOptionProps) {
+function CardOption({ selected, handlePress, disabled, multiChoice }: CardOptionProps) {
   const [hovered, setHovered] = useState(false)
 
 
@@ -146,10 +165,17 @@ function CardOption({ selected, handlePress, disabled }: CardOptionProps) {
       }
     // style={selected && { transform: [{ rotateY: '180deg' }] }}
     >
-      <View className="border-2 border-slate-400 p-1 h-7 w-7 rounded-full mr-2 flex justify-center items-center">
+      <View
+        className={
+          clsx(
+            "border-2 border-slate-400 p-1 h-7 w-7",
+            multiChoice ? "rounded-sm" : "rounded-full",
+            "mr-2 flex justify-center items-center"
+          )}>
         <View className={
           clsx(
-            "bg-black rounded-full w-4 h-4",
+            "bg-black w-4 h-4",
+            multiChoice ? "rounded-sm" : "rounded-full",
             !selected && "hidden"
 
           )
