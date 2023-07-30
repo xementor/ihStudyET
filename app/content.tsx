@@ -12,6 +12,7 @@ import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 import { styled, withExpoSnack } from "nativewind";
 import clsx from "clsx";
 import CardQuiz from "@/components/CardQuiz";
+import { Hint } from "@/components/Hint";
 
 
 
@@ -19,6 +20,7 @@ import CardQuiz from "@/components/CardQuiz";
 
 function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
+  const [showHint, setHint] = useState(true)
   const scrollViewRef = useRef<ScrollView>(null);
   const [containerHeight, setContainerHeight] = useState<number>(0);
 
@@ -26,6 +28,9 @@ function ContentScreen() {
   const { lessonIdx } = useAppSelector((state) => state.lesson);
 
 
+  function toggleHint() {
+    setHint(!showHint)
+  }
 
 
   const onePageLesson = lessons[lessonIdx];
@@ -43,6 +48,7 @@ function ContentScreen() {
     dispatch(incrementIndex());
 
     scrollViewRef.current?.scrollToEnd({ animated: true })
+    toggleHint()
   }
 
 
@@ -87,7 +93,10 @@ This is normal text
         <ProgressHeader />
       </View>
 
+
+
       <View className="h-full w-full sm:w-2/3 md:w-1/2">
+        {showHint && <Hint />}
 
         <ScrollView className="px-2 pb-80"
           onScroll={handleScroll}
@@ -101,6 +110,7 @@ This is normal text
           </View>
 
           <CardQuiz />
+
 
 
           {onePageLesson.contents.slice(0, index).map((item, index) => {
