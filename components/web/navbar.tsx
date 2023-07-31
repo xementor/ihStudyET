@@ -8,13 +8,13 @@ import { ColorType } from '@/constants/theming/types';
 import useTheme from '@/constants/theming/useTheme';
 import { Link } from 'expo-router';
 import clsx from 'clsx';
-import { Hoverable } from '../Themed';
+import { Hoverable, P } from '../Themed';
 import { IconButton, Searchbar, Tooltip } from 'react-native-paper';
 
 
 
 type NavProps = {
-  onHamberge: () => void
+  onHamberge?: () => void
 }
 
 const Nav = ({ onHamberge }: NavProps) => {
@@ -50,6 +50,7 @@ const Nav = ({ onHamberge }: NavProps) => {
           dc='bg-blue-400 w-20 h-8 rounded-lg sm:w-36 flex items-center justify-center'
           hoveredStyle='bg-blue-600'
         >
+
           <Text
             className={
               clsx(
@@ -70,7 +71,6 @@ const Nav = ({ onHamberge }: NavProps) => {
         {/* <View style={styles.search} className=''> */}
         <Searchbar
           placeholder="Search"
-
           onChangeText={onChangeSearch}
           value={searchQuery}
         />

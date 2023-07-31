@@ -41,7 +41,7 @@ export function Text(props: TextProps) {
 }
 
 const StyledPressable = styled(Pressable)
-
+export const P = styled(DefaultText, 'text-base text-black my-4')
 
 export function Hoverable({ hoveredStyle, dc, ...props }: PressableProps & { hoveredStyle?: string, dc?: string }) {
   const [isHovered, setHovered] = useState(false)

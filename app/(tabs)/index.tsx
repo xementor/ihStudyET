@@ -3,7 +3,7 @@ import CourseCover from "@/components/CourseCover";
 import Nav from "@/components/web/NavBar"
 import StreakBoard from "@/components/StreakBoard";
 import { Modal, PaperProvider, Portal } from "react-native-paper";
-import React from "react";
+import React, { useRef } from "react";
 import { styled } from "nativewind";
 
 
@@ -17,6 +17,9 @@ const CoursesScreen = () => {
   const containerStyle = { backgroundColor: 'white', padding: 20, top: 10 };
 
   const StyledModal = styled(Modal,)
+  const targetRef = useRef(null);
+
+
 
   return (
     <PaperProvider>
@@ -24,6 +27,7 @@ const CoursesScreen = () => {
         <>
           <Nav onHamberge={toggleModal} />
           <>
+
             <Portal>
               <StyledModal
                 visible={visible} onDismiss={hideModal}
