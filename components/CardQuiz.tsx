@@ -115,7 +115,7 @@ type CardButtonProps = {
   handlePress?: (event: GestureResponderEvent) => void
 }
 
-function CardButton({ type = "outline", content, style, handlePress }: CardButtonProps) {
+export function CardButton({ type = "outline", content, style, handlePress }: CardButtonProps) {
 
   let commonStyle = "text-base font-bold flex-nowrap p-2 rounded-lg "
   if (type == "outline") commonStyle = commonStyle + "border-2 border-slate-400"

@@ -277,7 +277,7 @@ const SubChapterItem: React.FC<LessonItemProps> = ({ subChapter, state }) => {
     <View className="pl-7">
       <View className="w-1 h-6 bg-slate-400 ml-10 sm" />
 
-      < Link href="/content_page" asChild >
+      < Link href="/content" asChild >
         <View className="flex flex-row items-center p-2 bg-slate-100 ">
 
           {

@@ -13,6 +13,9 @@ import { styled, withExpoSnack } from "nativewind";
 import clsx from "clsx";
 import CardQuiz from "@/components/CardQuiz";
 import { Hint } from "@/components/Hint";
+import Prompt from "@/components/Prompt";
+import YouTubePlayer from "@/components/YoutubeVideo";
+import YoutubeVideo from "@/components/YoutubeVideo";
 
 
 
@@ -116,7 +119,10 @@ This is normal text
           {onePageLesson.contents.slice(0, index).map((item, index) => {
             return <ContentContainer content={item.content.text} key={index} />
           })}
+          <Prompt />
+          <YoutubeVideo />
         </ScrollView>
+
 
         {showButton && <View className="absolute bottom-2 w-full px-2">
           <AppButton content="Continue" onPress={onPress} />
