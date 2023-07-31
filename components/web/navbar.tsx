@@ -9,12 +9,15 @@ import useTheme from '@/constants/theming/useTheme';
 import { Link } from 'expo-router';
 import clsx from 'clsx';
 import { Hoverable } from '../Themed';
-import { Searchbar } from 'react-native-paper';
+import { IconButton, Searchbar, Tooltip } from 'react-native-paper';
 
 
 
+type NavProps = {
+  onHamberge: () => void
+}
 
-const Nav = () => {
+const Nav = ({ onHamberge }: NavProps) => {
   const { colors: color } = useTheme()
   const { styles, ids } = getStyles(color)
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -24,14 +27,16 @@ const Nav = () => {
   function NavItem({ name }: { name: string }) {
     return (
       <Link href="/(tabs)/course" >
-        <Hoverable
-          style={styles.navItem}
-          dc='bg-gray-200 rounded-lg p-1'
-          hoveredStyle='bg-blue-200'
-        >
-          <MaterialCommunityIcons size={24} accessibilityHint='close' name={name == "Course" ? "book" : "home"} color={color.onSurface} />
-          <Text style={{ color: color.onSurface }}>{name}</Text>
-        </Hoverable>
+        <Tooltip title={name}>
+          <Hoverable
+            style={styles.navItem}
+            dc='bg-gray-200 rounded-lg p-1'
+            hoveredStyle='bg-blue-200'
+          >
+            <MaterialCommunityIcons size={24} accessibilityHint='close' name={name == "Course" ? "book" : "home"} color={color.onSurface} />
+            <Text style={{ color: color.onSurface }}>{name}</Text>
+          </Hoverable>
+        </Tooltip>
 
       </Link>
     );
@@ -65,11 +70,17 @@ const Nav = () => {
         {/* <View style={styles.search} className=''> */}
         <Searchbar
           placeholder="Search"
+
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
 
-        <MaterialCommunityIcons size={24} accessibilityHint='close' name='menu' color={color.onSurface} />
+        <IconButton
+          size={24}
+          icon='menu'
+          iconColor={color.onSurface}
+          onPress={onHamberge}
+        />
 
       </View >
     </>);

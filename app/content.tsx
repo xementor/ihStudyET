@@ -10,11 +10,9 @@ import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
 import { styled, withExpoSnack } from "nativewind";
-import clsx from "clsx";
 import CardQuiz from "@/components/CardQuiz";
 import { Hint } from "@/components/Hint";
 import Prompt from "@/components/Prompt";
-import YouTubePlayer from "@/components/YoutubeVideo";
 import YoutubeVideo from "@/components/YoutubeVideo";
 
 
@@ -25,7 +23,9 @@ function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
   const [showHint, setHint] = useState(true)
   const scrollViewRef = useRef<ScrollView>(null);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
+
+
+
 
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
@@ -89,6 +89,10 @@ This is normal text
   };
 
 
+  function closeHint(): void {
+    setHint(false)
+  }
+
   return (
     <View className="flex-1 items-center bg-slate-100">
 
@@ -99,7 +103,7 @@ This is normal text
 
 
       <View className="h-full w-full sm:w-2/3 md:w-1/2">
-        {showHint && <Hint />}
+        {showHint && <Hint close={closeHint} />}
 
         <ScrollView className="px-2 pb-80"
           onScroll={handleScroll}
