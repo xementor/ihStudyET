@@ -3,8 +3,11 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, useColorScheme, View as DefaultView } from 'react-native';
+import { Text as DefaultText, useColorScheme, View as DefaultView, Pressable, PressableProps } from 'react-native';
 import { DarkTheme, DefaultTheme } from '@/constants/Colors';
+import React, { useState } from 'react';
+import { styled } from 'nativewind';
+import clsx from 'clsx';
 
 
 type ThemeProps = {
@@ -35,6 +38,29 @@ export function Text(props: TextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'primary');
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
+}
+
+const StyledPressable = styled(Pressable)
+
+
+export function Hoverable({ hoveredStyle, dc, ...props }: PressableProps & { hoveredStyle?: string, dc?: string }) {
+  const [isHovered, setHovered] = useState(false)
+
+
+  return (
+    <Pressable
+      {...props}
+      className={
+        clsx(
+          dc,
+          isHovered && hoveredStyle
+        )
+      }
+      onHoverIn={() => setHovered(true)}
+      onHoverOut={() => setHovered(false)
+      }
+    />
+  )
 }
 
 export function View(props: ViewProps) {

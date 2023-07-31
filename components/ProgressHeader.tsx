@@ -10,6 +10,7 @@ import { IconButton as IB, MD3Colors } from 'react-native-paper';
 import { showSheet } from '@/store/contentsBottomSheet';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ColorType } from '@/constants/theming/types';
+import { Link } from 'expo-router';
 
 
 export const lessons = [cLesson1, cLesson2, cLesson3];
@@ -38,17 +39,15 @@ function ProgessHeader() {
   const IconButton: React.FC<IconButtonProps> = ({ name, web = false, style }) => {
     const className = clsx('p-2', web && 'hidden android:hidden ios:hidden md:flex', style)
     return (
-      <StyledIB
-        icon={name}
-        size={25}
-        iconColor={colors.onSurface}
-        className={className}
-        onPress={() => { }}
-      />
-
-      // <Pressable className="ml-1 lg:ml-6 active:bg-blue-300">
-      //   <StyledFontAwesome className={className} name={name} size={25} color={colors.onSurface} />
-      // </Pressable>
+      <Link href="/" asChild>
+        <StyledIB
+          icon={name}
+          size={25}
+          iconColor={colors.onSurface}
+          className={className}
+          onPress={() => { }}
+        />
+      </Link>
     )
   }
 
