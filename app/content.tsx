@@ -94,22 +94,21 @@ This is normal text
   }
 
   return (
-    <View className="flex-1 items-center bg-slate-100">
+    <ScrollView className=" pb-80 bg-slate-100"
+      onScroll={handleScroll}
+      ref={scrollViewRef}
 
-      <View className="w-full h-3 z-10">
+    >
+
+      <View className="absolute top-0 w-full h-3 z-10 ">
         <ProgressHeader />
       </View>
+      <View className="flex-1 px-2 items-center">
+
+        <View className="h-full w-full sm:w-2/3 md:w-2/3 lg:w-1/2">
+          {showHint && <Hint close={closeHint} />}
 
 
-
-      <View className="h-full w-full sm:w-2/3 md:w-1/2">
-        {showHint && <Hint close={closeHint} />}
-
-        <ScrollView className="px-2 pb-80"
-          onScroll={handleScroll}
-          ref={scrollViewRef}
-
-        >
 
 
           <View className="mt-20 mb-3 ml-2">
@@ -125,17 +124,19 @@ This is normal text
           })}
           <Prompt />
           <YoutubeVideo />
-        </ScrollView>
 
 
-        {showButton && <View className="absolute bottom-2 w-full px-2">
-          <AppButton content="Continue" onPress={onPress} />
+
+          {showButton && <View className="absolute bottom-2 w-full px-2">
+            <AppButton content="Continue" onPress={onPress} />
+          </View>
+          }
+
         </View>
-        }
 
-      </View>
 
-    </View>
+      </View >
+    </ScrollView>
   );
 
 }

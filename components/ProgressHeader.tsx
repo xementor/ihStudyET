@@ -58,7 +58,7 @@ function ProgessHeader() {
         <IconButton name="close" />
       </View>
 
-      <View className='flex flex-row w-2/3 lg:w-1/2 justify-between items-center'>
+      <View className='flex flex-row w-2/3 lg:w-2/3 justify-between items-center'>
         {/* <View className='flex flex-row items-center'> */}
 
         <IconButton name="chevron-left" web={true} />

@@ -9,7 +9,7 @@ import { styled } from "nativewind";
 
 const CoursesScreen = () => {
 
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
