@@ -116,6 +116,7 @@ This is normal text
           </View>
 
           <CardQuiz />
+          <YoutubeVideo />
 
 
 
@@ -123,7 +124,6 @@ This is normal text
             return <ContentContainer content={item.content.text} key={index} />
           })}
           <Prompt />
-          <YoutubeVideo />
 
 
 

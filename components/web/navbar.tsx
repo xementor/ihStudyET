@@ -68,8 +68,8 @@ const Nav = ({ onHamberge }: NavProps) => {
         </View>
 
 
-        {/* <View style={styles.search} className=''> */}
         <Searchbar
+          // className='flex-1 ml-10'
           placeholder="Search"
           onChangeText={onChangeSearch}
           value={searchQuery}

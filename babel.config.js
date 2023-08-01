@@ -4,7 +4,7 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       // Required for expo-router
-      "nativewind/babel", { mode: 'transformOnly' },
+      "nativewind/babel",
       require.resolve("expo-router/babel")
     ],
   };
