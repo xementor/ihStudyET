@@ -33,7 +33,7 @@ export default function LoginScreen() {
         keyboardShouldPersistTaps="always">
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('@/assets/images/icon.png')}
         />
         <TextInput
           style={styles.input}

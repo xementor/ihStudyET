@@ -6,11 +6,9 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}",
     "./components/*.{js,jsx,ts,tsx}"
   ],
-  important: 'html',
   theme: {
     extend: {},
   },
-
   plugins: [require('nativewind/tailwind/css')]
 }
 

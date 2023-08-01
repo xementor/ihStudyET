@@ -8,7 +8,7 @@ import { useColorScheme } from 'nativewind'
 import ThemeProvider from '@/constants/theming/ThemeProvider'
 import { DarkTheme, DefaultTheme } from "@/constants/Colors"
 import { store } from "../store/configureStore";
-import "../main.css";
+// import "../main.css";
 import useTheme from '@/constants/theming/useTheme';
 
 export {
