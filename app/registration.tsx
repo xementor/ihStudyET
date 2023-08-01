@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
+import { auth } from '@/firebaseConfig'
+
 export default function RegistrationScreen({ }) {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
@@ -20,7 +22,7 @@ export default function RegistrationScreen({ }) {
       alert("Passwords don't match.")
       return
     }
-    const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 

@@ -1,6 +1,10 @@
 const { getDefaultConfig } = require('@expo/metro-config');
 
-const defaultConfig = getDefaultConfig(__dirname);
-defaultConfig.resolver.sourceExts.push('cjs');
+const config = getDefaultConfig(__dirname, {
+  // [Web-only]: Enables CSS support in Metro.
+  isCSSEnabled: true,
+});
+config.resolver.sourceExts.push("mjs");
+config.resolver.sourceExts.push('cjs');
 
-module.exports = defaultConfig;
+module.exports = config;
