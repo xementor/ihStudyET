@@ -1,13 +1,21 @@
+import React, { useRef, useState } from "react";
 import { View, Text, Platform, Pressable } from "react-native";
+import { Redirect } from 'expo-router';
+import { Modal, PaperProvider, Portal } from "react-native-paper";
+import { styled } from "nativewind";
+
 import CourseCover from "@/components/CourseCover";
 import Nav from "@/components/web/NavBar"
 import StreakBoard from "@/components/StreakBoard";
-import { Modal, PaperProvider, Portal } from "react-native-paper";
-import React, { useRef } from "react";
-import { styled } from "nativewind";
+import { useAppSelector } from "../hook";
+import LoginScreen from "../login";
 
 
 const CoursesScreen = () => {
+
+  const [loading, setLoading] = useState(true)
+  const { user } = useAppSelector((state) => state.user);
+
 
   const [visible, setVisible] = React.useState(false);
 
@@ -21,6 +29,9 @@ const CoursesScreen = () => {
 
 
 
+  if (!user) {
+    return <LoginScreen />
+  }
   return (
     <PaperProvider>
       {Platform.OS === "web" &&
@@ -44,6 +55,7 @@ const CoursesScreen = () => {
       }
 
       <View className="p-2 md:p-10">
+        <Text>{user.email}</Text>
         <StreakBoard />
         <Text className="text-2xl font-bold my-4">Your course history</Text>
 

@@ -1,22 +1,27 @@
-
 import React, { useState } from 'react'
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { UserInfo, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const dispatch = useAppDispatch();
+
 
   const onFooterLinkPress = () => {
     // navigation.navigate('Registration')
   }
 
   const onLoginPress = () => {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        const { displayName, email, phoneNumber } = userCredential.user
+
+        dispatch(updateUser({ displayName: displayName, email: email }))
+
         // ...
       })
       .catch((error) => {
@@ -68,6 +73,9 @@ export default function LoginScreen() {
 }
 
 import { StyleSheet } from 'react-native';
+import { auth } from '@/firebaseConfig';
+import { useAppDispatch, useAppSelector } from './hook';
+import { User, updateUser } from '@/store/user';
 
 const styles = StyleSheet.create({
   container: {
