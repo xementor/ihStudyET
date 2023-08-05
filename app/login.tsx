@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { UserInfo, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { StyleSheet } from 'react-native';
+import { auth } from '@/firebaseConfig';
+import { useAppDispatch, useAppSelector } from './hook';
+import { updateUser } from '@/store/user';
 
 
 export default function LoginScreen() {
@@ -18,9 +22,8 @@ export default function LoginScreen() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const { displayName, email, phoneNumber } = userCredential.user
-
-        dispatch(updateUser({ displayName: displayName, email: email }))
+        const user = userCredential.user
+        dispatch(updateUser(user))
 
         // ...
       })
@@ -72,10 +75,6 @@ export default function LoginScreen() {
   )
 }
 
-import { StyleSheet } from 'react-native';
-import { auth } from '@/firebaseConfig';
-import { useAppDispatch, useAppSelector } from './hook';
-import { User, updateUser } from '@/store/user';
 
 const styles = StyleSheet.create({
   container: {

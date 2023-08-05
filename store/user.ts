@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { User } from "firebase/auth"
 
-export interface User {
+export interface UserLogin {
 	displayName: string | null
 	email: string | null
-	// readonly phoneNumber: string | null
-	// readonly photoURL: string | null
-	// readonly providerId: string
-	// readonly uid: string
 }
 
 interface userState {
-	user: User | false
+	user: UserLogin | false
 }
+
 const initialState: userState = {
 	user: false,
 }
@@ -21,7 +19,8 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		updateUser: (state, action: PayloadAction<User>) => {
-			state.user = action.payload
+			const user = action.payload
+			state.user = { displayName: user.displayName, email: user.email }
 		},
 	},
 })

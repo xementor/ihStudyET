@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, Platform, Pressable } from "react-native";
-import { Redirect } from 'expo-router';
+import { View, Text, Platform } from "react-native";
 import { Modal, PaperProvider, Portal } from "react-native-paper";
 import { styled } from "nativewind";
 
