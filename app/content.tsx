@@ -39,20 +39,7 @@ function ContentScreen() {
   const onePageLesson = lessons[lessonIdx];
 
   const dispatch = useAppDispatch();
-  function onPress() {
-    if (index >= onePageLesson.contents.length - 1) {
-      // Handle lesson progression
-      if (lessonIdx >= lessons.length - 1) {
-        return;
-      }
-      dispatch(incrementLessonIdx());
-      return;
-    }
-    dispatch(incrementIndex());
 
-    scrollViewRef.current?.scrollToEnd({ animated: true })
-    toggleHint()
-  }
 
 
 
@@ -72,15 +59,20 @@ function ContentScreen() {
   }, [lessonIdx]);
 
 
+  function onPress() {
+    if (index >= onePageLesson.contents.length - 1) {
+      // Handle lesson progression
+      if (lessonIdx >= lessons.length - 1) {
+        return;
+      }
+      dispatch(incrementLessonIdx());
+      return;
+    }
+    dispatch(incrementIndex());
 
-  const copy = `
-# h1 Heading 8-)
-
-**This is some bold text!**
-
-This is normal text
-`;
-
+    scrollViewRef.current?.scrollToEnd({ animated: true })
+    toggleHint()
+  }
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -97,6 +89,7 @@ This is normal text
     <ScrollView className=" pb-80 bg-slate-100"
       onScroll={handleScroll}
       ref={scrollViewRef}
+      scrollEventThrottle={20}
 
     >
 

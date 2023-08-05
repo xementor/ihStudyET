@@ -65,34 +65,34 @@ function RootLayoutNav() {
 
 
 
-  useEffect(() => {
-    console.log('hi')
-    const auth = getAuth()
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user
-        dispatch(updateUser(user))
-        setLoading(false)
-      } else {
-        setLoading(false)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   console.log('hi')
+  //   const auth = getAuth()
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const uid = user
+  //       dispatch(updateUser(user))
+  //       setLoading(false)
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   })
+  // }, [])
 
 
-  if (loading) {
-    return (
-      <>
-        <Text>Loading</Text>
-      </>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <Text>Loading</Text>
+  //     </>
+  //   )
+  // }
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="content" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="registration" options={{ headerShown: false }} />
@@ -100,6 +100,4 @@ function RootLayoutNav() {
     </ThemeProvider>
   )
 }
-function firestore() {
-  throw new Error("Function not implemented.")
-}
+

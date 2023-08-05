@@ -28,9 +28,10 @@ const CoursesScreen = () => {
 
 
 
-  if (!user) {
-    return <LoginScreen />
-  }
+  // if (!user) {
+  //   return <LoginScreen />
+  // }
+
   return (
     <PaperProvider>
       {Platform.OS === "web" &&
@@ -54,7 +55,7 @@ const CoursesScreen = () => {
       }
 
       <View className="p-2 md:p-10">
-        <Text>{user.email}</Text>
+        {user && <Text>{user.email}</Text>}
         <StreakBoard />
         <Text className="text-2xl font-bold my-4">Your course history</Text>
 
