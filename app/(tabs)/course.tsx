@@ -10,7 +10,7 @@ import Nav from "@/components/web/NavBar";
 import { course as courseData } from "@/services/storage/course";
 import { SubLesson } from "@/services/storage/model";
 import { useAppDispatch, useAppSelector } from '../hook';
-import { updateCourseDes, updateCourseTitle } from '@/store/editCourse';
+import { updateChapterTitle, updateCourseDes, updateCourseTitle, updateSubChapterTitle } from '@/store/editCourse';
 
 
 export default function CourseScreen() {
@@ -99,7 +99,7 @@ export default function CourseScreen() {
           <View className="md:flex-1">
             <FlatList
               data={course.chapters}
-              renderItem={({ item, index }) => <ChapterItem chapterNo={(index + 1).toString()} chapter={item} />}
+              renderItem={({ item, index }) => <ChapterItem index={index} chapter={item} />}
               keyExtractor={(item, index) => index.toString()} // Assuming you don't have unique IDs in the data.
             />
           </View>
@@ -158,7 +158,7 @@ export default function CourseScreen() {
 
           {
             course.chapters.map((subChapter, i) =>
-              <ChapterItem chapterNo="1" key={i} chapter={subChapter} />
+              <ChapterItem index={i} key={i} chapter={subChapter} />
             )
           }
 
@@ -171,7 +171,7 @@ export default function CourseScreen() {
 }
 
 interface ChapterItemProps {
-  chapterNo: string,
+  index: number,
   chapter: {
     title: string;
     subChapter: {
@@ -181,8 +181,9 @@ interface ChapterItemProps {
   }
 }
 
-const ChapterItem: React.FC<ChapterItemProps> = ({ chapterNo, chapter }) => {
+const ChapterItem: React.FC<ChapterItemProps> = ({ index, chapter }) => {
   const [expanded, setExpanded] = useState(false);
+  const dispatch = useAppDispatch()
 
   const getState = (i: number) => {
     if (i == 1) return subLessonState.current
@@ -198,9 +199,14 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ chapterNo, chapter }) => {
         <View className="px-2 flex flex-row justify-between items-center bg-gray-100">
           <View className="flex flex-row items-center w-[90%]">
             <View className="bg-zinc-300 w-20 h-20 flex justify-center items-center rounded-lg mx-5">
-              <Text className="text-3xl font-bold">{chapterNo}</Text>
+              <Text className="text-3xl font-bold">{(index + 1)}</Text>
             </View>
-            <Text className="text-2xl font-bold">{chapter.title}</Text>
+            <EditAbleText
+              className="text-2xl font-bold"
+              onSave={(title) => dispatch(updateChapterTitle({ id: index, title }))}
+            >
+              {chapter.title}
+            </EditAbleText>
           </View>
           <IconButton
             icon={expanded ? "chevron-up" : "chevron-down"}
@@ -211,8 +217,7 @@ const ChapterItem: React.FC<ChapterItemProps> = ({ chapterNo, chapter }) => {
       {
 
         expanded && chapter.subChapter.map((subChapter, i) =>
-          <SubChapterItem subChapter={subChapter} key={i} state={getState(i)} />
-
+          <SubChapterItem chapterId={index} subChapter={subChapter} key={i} id={i} state={getState(i)} />
         )
 
       }
@@ -228,14 +233,17 @@ interface LessonItemProps {
     title: string;
     lessons: SubLesson[];
   },
-  state: subLessonState
+  state: subLessonState,
+  id: number,
+  chapterId: number
 }
 
 enum subLessonState {
   "completed", "current", "notCompleted"
 
 }
-const SubChapterItem: React.FC<LessonItemProps> = ({ subChapter, state }) => {
+const SubChapterItem: React.FC<LessonItemProps> = ({ id, subChapter, state, chapterId }) => {
+  const dispatch = useAppDispatch()
 
   const ui = () => {
     if (state == subLessonState.completed) {
@@ -295,7 +303,12 @@ const SubChapterItem: React.FC<LessonItemProps> = ({ subChapter, state }) => {
             ui()
 
           }
-          <Text className="text-base">{subChapter.title}</Text>
+          <EditAbleText
+            className="text-base"
+            onSave={(title) => dispatch(updateSubChapterTitle({ chapterId, id, title }))}
+          >
+            {subChapter.title}
+          </EditAbleText>
         </View>
       </Link >
     </View >

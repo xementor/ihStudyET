@@ -17,8 +17,27 @@ const slice = createSlice({
 			const description = action.payload
 			state.course.description = description
 		},
+		updateChapterTitle: (
+			state,
+			action: PayloadAction<{ id: number; title: string }>
+		) => {
+			const { id, title } = action.payload
+			state.course.chapters[id].title = title
+		},
+		updateSubChapterTitle: (
+			state,
+			action: PayloadAction<{ chapterId: number; title: string; id: number }>
+		) => {
+			const { id, title, chapterId } = action.payload
+			state.course.chapters[chapterId].subChapter[id].title = title
+		},
 	},
 })
 
-export const { updateCourseTitle, updateCourseDes } = slice.actions
+export const {
+	updateCourseTitle,
+	updateCourseDes,
+	updateChapterTitle,
+	updateSubChapterTitle,
+} = slice.actions
 export default slice.reducer
