@@ -1,6 +1,9 @@
 import useTheme from '@/constants/theming/useTheme';
 import * as React from 'react';
 import { Text, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import Markdown from 'react-native-markdown-display';
+
+
 
 interface ContentContainerProps {
   varient?: 'primary' | 'default',
@@ -19,7 +22,6 @@ const ContentContainer = ({ content, style, varient = 'default' }: ContentContai
       borderRadius: 5,
       padding: 10,
       marginBottom: 10,
-
     },
     text: {
       color: varient === 'default' ? color.onSurface : color.onPrimary,
@@ -30,7 +32,10 @@ const ContentContainer = ({ content, style, varient = 'default' }: ContentContai
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={styles.text}>{content}</Text>
+      {/* <Text style={styles.text}>{content}</Text> */}
+      <Markdown>
+        {content}
+      </Markdown>
     </View>
   );
 

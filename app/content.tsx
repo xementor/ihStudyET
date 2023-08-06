@@ -23,25 +23,11 @@ function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
   const [showHint, setHint] = useState(true)
   const scrollViewRef = useRef<ScrollView>(null);
-
-
-
-
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
-
-
-  function toggleHint() {
-    setHint(!showHint)
-  }
-
-
-  const onePageLesson = lessons[lessonIdx];
-
   const dispatch = useAppDispatch();
 
-
-
+  const onePageLesson = lessons[lessonIdx];
 
   useEffect(() => {
     return () => {
@@ -58,6 +44,9 @@ function ContentScreen() {
     };
   }, [lessonIdx]);
 
+  function toggleHint() {
+    setHint(!showHint)
+  }
 
   function onPress() {
     if (index >= onePageLesson.contents.length - 1) {
@@ -86,50 +75,60 @@ function ContentScreen() {
   }
 
   return (
-    <ScrollView className=" pb-80 bg-slate-100"
-      onScroll={handleScroll}
-      ref={scrollViewRef}
-      scrollEventThrottle={20}
+    <>
+      <ScrollView className=" pb-80 bg-slate-100"
+        onScroll={handleScroll}
+        ref={scrollViewRef}
+        scrollEventThrottle={20}
 
-    >
+      >
 
-      <View className="absolute top-0 w-full h-3 z-10 ">
-        <ProgressHeader />
-      </View>
-      <View className="flex-1 px-2 items-center">
-
-        <View className="h-full w-full sm:w-2/3 md:w-2/3 lg:w-1/2">
-          {showHint && <Hint close={closeHint} />}
-
-
-
-
-          <View className="mt-20 mb-3 ml-2">
-            <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
-          </View>
-
-          <CardQuiz />
-          <YoutubeVideo />
-
-
-
-          {onePageLesson.contents.slice(0, index).map((item, index) => {
-            return <ContentContainer content={item.content.text} key={index} />
-          })}
-          <Prompt />
-
-
-
-          {showButton && <View className="absolute bottom-2 w-full px-2">
-            <AppButton content="Continue" onPress={onPress} />
-          </View>
-          }
-
+        <View className="absolute top-0 w-full h-3 z-10 ">
+          <ProgressHeader />
         </View>
+        <View className="flex-1 px-2 items-center">
+
+          <View className="h-full w-full sm:w-2/3 md:w-2/3 lg:w-1/2">
+            {showHint && <Hint close={closeHint} />}
 
 
-      </View >
-    </ScrollView>
+
+
+            <View className="mt-20 mb-3 ml-2">
+              <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
+            </View>
+
+            <CardQuiz />
+            <YoutubeVideo />
+
+
+
+            {onePageLesson.contents.slice(0, index).map((item, index) => {
+              return <ContentContainer content={item.content.text} key={index} />
+            })}
+            <Prompt />
+
+            {
+              <View className="hidden sm:flex  px-2">
+                <AppButton content="Continue" onPress={onPress} />
+              </View>
+            }
+
+
+
+
+          </View>
+
+
+        </View >
+
+      </ScrollView>
+      {
+        showButton && <View className="sm:hidden absolute bottom-2 w-full px-2">
+          <AppButton content="Continue" onPress={onPress} />
+        </View>
+      }
+    </>
   );
 
 }
