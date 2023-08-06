@@ -1,23 +1,30 @@
-import { useRef, useState } from "react";
-import { View, Text, Pressable, Animated, ScrollView, Platform, FlatList } from "react-native";
-import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import MaterialIcons from "@expo/vector-icons/build/MaterialIcons";
 import { Link } from "expo-router";
+import React, { useRef, useState } from "react";
+import { Animated, FlatList, Platform, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
-import Nav from "@/components/web/NavBar";
 import { ScoreComponent } from "@/components/ProgressHeader";
-import { course } from "@/services/storage/course";
+import Nav from "@/components/web/NavBar";
+import { course as courseData } from "@/services/storage/course";
 import { SubLesson } from "@/services/storage/model";
-
+import { useAppDispatch, useAppSelector } from '../hook';
+import { updateCourseDes, updateCourseTitle } from '@/store/editCourse';
 
 
 export default function CourseScreen() {
+  const { course } = useAppSelector((state) => state.editCourse);
+  const dispatch = useAppDispatch();
+
   const [scrollY] = useState(new Animated.Value(0));
   const HEADER_MAX_HEIGHT = 250; // Set your desired maximum height for the top bar
   const HEADER_MIN_HEIGHT = 170;  // Set your desired minimum height for the top bar
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
   const scrollViewRef = useRef<ScrollView>(null);
+  const editAble = useState(true)
+
+
 
 
   const handleScroll = Animated.event(
@@ -55,6 +62,9 @@ export default function CourseScreen() {
   });
 
 
+
+
+
   if (Platform.OS === 'web') {
     return (
       <ScrollView>
@@ -70,11 +80,12 @@ export default function CourseScreen() {
                   <View
                     className="flex flex-row items-center justify-between py-2"
                   >
-                    <Text
-                      className="font-bold flex-1 text-3xl"
+                    <EditAbleText className="font-bold flex-1 text-3xl"
+                      onSave={(title) => dispatch(updateCourseTitle(title))}
                     >
                       {course.title}
-                    </Text>
+                    </EditAbleText>
+
                     <View className=" bg-slate-500 rounded-md h-20 w-20" />
                   </View>
                   <View className="h-5 bg-blue-300 rounded-3xl mt-1"></View>
@@ -306,27 +317,38 @@ const CourseCover: React.FC<CourseCoverProps> = ({ courseName }) => {
 
 }
 
-const CourseCoverScrollPart: React.FC<{ courseDescription: string }> = ({ courseDescription }) => (
-  <View className="px-6">
-    <Text className="text-base py-2">{courseDescription}</Text>
+const CourseCoverScrollPart: React.FC<{ courseDescription: string }> = ({ courseDescription }) => {
 
-    <View className="flex flex-row justify-between items-center">
-      <View className="flex flex-row items-center">
-        <MaterialIcons
-          name="notes"
+
+  const dispatch = useAppDispatch()
+  return (
+
+    <View className="px-6">
+      <EditAbleText
+        className="text-base py-2"
+        onSave={(des) => dispatch(updateCourseDes(des))}
+      >
+        {courseDescription}
+      </EditAbleText>
+
+      <View className="flex flex-row justify-between items-center">
+        <View className="flex flex-row items-center">
+          <MaterialIcons
+            name="notes"
+            size={25}
+            className='p-2 md:p-3' />
+          <Text className="ml-4">19 Lessons</Text>
+        </View>
+
+        <IconButton
+          icon="chevron-down"
           size={25}
-          className='p-2 md:p-3' />
-        <Text className="ml-4">19 Lessons</Text>
+          onPress={() => { }} />
+
       </View>
-
-      <IconButton
-        icon="chevron-down"
-        size={25}
-        onPress={() => { }} />
-
     </View>
-  </View>
-)
+  )
+}
 
 function newFunction() {
   return <View className="p-3 flex flex-row items-center justify-between">
@@ -335,5 +357,86 @@ function newFunction() {
     </View>
     <View className="h-5 bg-blue-300 rounded-3xl my-6" style={{ flex: 1 }} />
   </View>;
+}
+
+
+
+
+function EditAbleText({ onSave, ...props }: Text['props'] & { onSave?: (edited: string) => void }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(props.children);
+
+  const startEditing = () => {
+    setIsEditing(true);
+  };
+
+  const saveEditedText = () => {
+    setIsEditing(false);
+    if (onSave) onSave!(editedText ? editedText.toString() : "")
+  };
+
+  return (
+
+    <View className="flex-1">
+      {isEditing ? (
+        <View className="flex-row items-center">
+          <TextInput
+            className={props.className}
+            value={editedText?.toString()}
+            onChangeText={setEditedText}
+            autoFocus
+          />
+          <TouchableOpacity onPress={saveEditedText}>
+            <MaterialIcons name="save" size={25} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={startEditing}>
+          <Text {...props} />
+        </TouchableOpacity>
+      )}
+    </View>
+  )
+}
+
+interface EditAbleComponentProps {
+  children: Text;
+}
+
+const EditAbleComponent: React.FC<EditAbleComponentProps> = ({ children }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(children.props.children);
+  console.log("children props", children.props.children)
+
+  const startEditing = () => {
+    setIsEditing(true);
+  };
+
+  const saveEditedText = () => {
+    setIsEditing(false);
+    // Here you can add any additional logic to save the edited text if needed.
+  };
+  return (
+    <View className="items-center">
+      {isEditing ? (
+        <View className="flex-row items-center">
+          <TextInput
+            className={children.props.className}
+            value={editedText?.toString()}
+            onChangeText={setEditedText}
+            autoFocus
+          />
+          <TouchableOpacity onPress={saveEditedText}>
+            <MaterialIcons name="save" size={25} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity onPress={startEditing}>
+          {/* <View>{children}</View> */}
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+
 }
 

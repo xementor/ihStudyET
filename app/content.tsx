@@ -91,9 +91,6 @@ function ContentScreen() {
           <View className="h-full w-full sm:w-2/3 md:w-2/3 lg:w-1/2">
             {showHint && <Hint close={closeHint} />}
 
-
-
-
             <View className="mt-20 mb-3 ml-2">
               <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
             </View>
@@ -113,10 +110,6 @@ function ContentScreen() {
                 <AppButton content="Continue" onPress={onPress} />
               </View>
             }
-
-
-
-
           </View>
 
 

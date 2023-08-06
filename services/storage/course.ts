@@ -6,3 +6,5 @@ export const course = {
 		"Learn one of the most in-demand programing language the fun way",
 	chapters: [chapter, chapter, chapter],
 }
+
+export type CourseType = typeof course

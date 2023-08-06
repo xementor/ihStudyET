@@ -5,12 +5,14 @@ import lessonReducer from "./lessons"
 import contentsBottomSheet from "./contentsBottomSheet"
 import themeReducer from "./theme"
 import userReducer from "./user"
+import editCourseReducer from "./editCourse"
 
 export const reducer = combineReducers({
 	question: uiReducer,
 	subLesson: subLessonReducer,
 	lesson: lessonReducer,
-	contentSheet: contentsBottomSheet,
-	theme: themeReducer,
+	// contentSheet: contentsBottomSheet,
+	// theme: themeReducer,
 	user: userReducer,
+	editCourse: editCourseReducer,
 })
