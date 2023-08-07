@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@/app/hook"
-import { SubLesson } from "@/services/storage/model"
+import { SubChapter } from "@/services/storage/model"
 import { updateSubChapterTitle } from "@/store/editCourse"
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons"
 import { Link } from "expo-router"
@@ -13,10 +13,7 @@ export enum subLessonState {
 }
 
 interface LessonItemProps {
-	subChapter: {
-		title: string
-		lessons: SubLesson[]
-	}
+	subChapter: SubChapter
 	state: subLessonState
 	id: number
 	chapterId: number

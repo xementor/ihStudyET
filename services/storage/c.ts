@@ -1,6 +1,6 @@
-import { ContentType, SubLesson } from "./model"
+import { ContentType, Lesson } from "./model"
 
-export const cLesson1: SubLesson = {
+export const cLesson1: Lesson = {
 	title: "প্রোগ্রামের ধারণা (Concept of Program)",
 	contents: [
 		{
@@ -28,6 +28,25 @@ export const cLesson1: SubLesson = {
 					"৩. তৃতীয় প্রজন্ম ভাষা (১৯৬০) : উচ্চতর ভাষা (High Level Language) \n" +
 					"৪. চতুর্থ প্রজন্ম ভাষা (১৯৭০) : অতি উচ্চতর ভাষা (Very High Level Language)\n" +
 					"৫. পঞ্চম প্রজন্ম ভাষা (১৯৮০) : স্বাভাবিক বা ন্যাচারাল ভাষা (Natural Language)\n",
+			},
+		},
+		{
+			type: ContentType.question,
+			content: {
+				mcq: {
+					question:
+						"What is the output of modifing the program to `print (message + message)` ?",
+					options: [
+						"The Welcome message display once",
+						"Another option to show",
+						"another to show",
+					],
+					correctOptions: [1, 2],
+					explaination: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti
+						ad molestiae sapiente aliquam amet, eveniet, quidem in quod nihil
+						totam ipsam soluta nesciunt pariatur eum perferendis quaerat
+						mollitia laboriosam! Illo!`,
+				},
 			},
 		},
 		{
@@ -138,7 +157,7 @@ export const cLesson1: SubLesson = {
 	],
 }
 
-export const cLesson2: SubLesson = {
+export const cLesson2: Lesson = {
 	title: "মেশিন ভাষা (Machine Language\n",
 	contents: [
 		{
@@ -193,7 +212,7 @@ export const cLesson2: SubLesson = {
 	],
 }
 
-export const cLesson3: SubLesson = {
+export const cLesson3: Lesson = {
 	title: "অ্যাসেম্বলি ভাষা (Assembly Language)",
 	contents: [
 		{

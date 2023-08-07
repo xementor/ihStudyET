@@ -12,7 +12,7 @@ import {
 import ContentContainer from "../components/content_container"
 import AppButton from "../components/AppButton"
 
-import { ContentType } from "../services/storage/model"
+import { Content, ContentType } from "../services/storage/model"
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson"
 import { useAppSelector, useAppDispatch } from "./hook"
 import { incrementLessonIdx } from "../store/lessons"
@@ -40,26 +40,11 @@ function ContentScreen() {
 	const { lessons } = useAppSelector((state) => state.editLesson)
 	const onePageLesson = lessons[lessonIdx]
 
-	const mcq = {
-		question:
-			"What is the output of modifing the program to `print (message + message)` ?",
-		options: [
-			"The Welcome message display once",
-			"Another option to show",
-			"another to show",
-		],
-		correctOptions: [1, 2],
-		explaination: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-						ad molestiae sapiente aliquam amet, eveniet, quidem in quod nihil
-						totam ipsam soluta nesciunt pariatur eum perferendis quaerat
-						mollitia laboriosam! Illo!`,
-	}
-
 	useEffect(() => {
 		return () => {
 			if (onePageLesson.contents[index].type === ContentType.info) {
-				const newInfo = onePageLesson.contents[index].content
-				dispatch(addInfo(newInfo))
+				const newContent = onePageLesson.contents[index].content
+				dispatch(addInfo(newContent))
 			}
 		}
 	}, [index])
@@ -134,29 +119,13 @@ function ContentScreen() {
 							</EditAbleText>
 						</View>
 
-						<CardQuiz mcq={mcq} />
 						{/* <YoutubeVideo /> */}
-
 						{editabl
 							? onePageLesson.contents.map((item, index) => {
-									return (
-										<ContentContainer
-											content={item.content.text}
-											key={index}
-											cid={index}
-											lid={lessonIdx}
-										/>
-									)
+									return renderItem(item, index)
 							  })
 							: onePageLesson.contents.slice(0, index).map((item, index) => {
-									return (
-										<ContentContainer
-											content={item.content.text}
-											key={index}
-											cid={index}
-											lid={lessonIdx}
-										/>
-									)
+									return renderItem(item, index)
 							  })}
 
 						{/* <Prompt /> */}
@@ -177,6 +146,21 @@ function ContentScreen() {
 			)}
 		</>
 	)
+
+	function renderItem(item: Content, index: number) {
+		if (item.type == ContentType.info) {
+			return (
+				<ContentContainer
+					content={item.content.text}
+					key={index}
+					cid={index}
+					lid={lessonIdx}
+				/>
+			)
+		} else if (item.type == ContentType.question) {
+			return <CardQuiz mcq={item.content.mcq} />
+		} else return <Text>no content</Text>
+	}
 }
 
 export default withExpoSnack(ContentScreen)

@@ -1,4 +1,4 @@
-import { course, CourseType } from "@/services/storage/course"
+import { course } from "@/services/storage/course"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState = {
@@ -29,7 +29,7 @@ const slice = createSlice({
 			action: PayloadAction<{ chapterId: number; title: string; id: number }>
 		) => {
 			const { id, title, chapterId } = action.payload
-			state.course.chapters[chapterId].subChapter[id].title = title
+			state.course.chapters[chapterId].subChapters[id].title = title
 		},
 	},
 })

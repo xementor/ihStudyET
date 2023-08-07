@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Content, ContentType, Info, SubLesson } from "@/services/storage/model"
-import { cLesson1, cLesson2, cLesson3 } from "@/services/storage/c"
+import { Content, ContentType, Info } from "@/services/storage/model"
+import { chapter } from "@/services/storage/chapter"
 
-const lessons = [cLesson1, cLesson2, cLesson3]
+const lessons = chapter.subChapters[0].lessons
 
 const initialState = {
 	lessons: lessons,
 }
-lessons[1].contents[0].content
 
 const slice = createSlice({
 	name: "editLesson",
@@ -18,7 +17,7 @@ const slice = createSlice({
 			action: PayloadAction<{ lid: number; title: string }>
 		) => {
 			const { lid, title } = action.payload
-			console.log("lid", lid)
+			state.lessons[lid]
 			state.lessons[lid].title = title
 		},
 		updateContentText: (
