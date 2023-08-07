@@ -6,6 +6,7 @@ import contentsBottomSheet from "./contentsBottomSheet"
 import themeReducer from "./theme"
 import userReducer from "./user"
 import editCourseReducer from "./editCourse"
+import editLesson from "./editLesson"
 
 export const reducer = combineReducers({
 	question: uiReducer,
@@ -15,4 +16,5 @@ export const reducer = combineReducers({
 	// theme: themeReducer,
 	user: userReducer,
 	editCourse: editCourseReducer,
+	editLesson: editLesson,
 })

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, View, FlatList, ScrollView, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, Pressable, GestureResponderEvent } from "react-native";
+import { View, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
 
 import ContentContainer from "../components/content_container";
 import AppButton from "../components/AppButton";
@@ -9,11 +9,13 @@ import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
 import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
 import ProgressHeader, { lessons } from "@/components/ProgressHeader";
-import { styled, withExpoSnack } from "nativewind";
+import { withExpoSnack } from "nativewind";
 import CardQuiz from "@/components/CardQuiz";
 import { Hint } from "@/components/Hint";
 import Prompt from "@/components/Prompt";
 import YoutubeVideo from "@/components/YoutubeVideo";
+import EditAbleText from "@/components/EditableText";
+import { updateLessonTitle } from "@/store/editLesson";
 
 
 
@@ -27,7 +29,10 @@ function ContentScreen() {
   const { lessonIdx } = useAppSelector((state) => state.lesson);
   const dispatch = useAppDispatch();
 
-  const onePageLesson = lessons[lessonIdx];
+  const { lessons } = useAppSelector((state) => state.editLesson)
+  const onePageLesson = lessons[lessonIdx]
+
+
 
   useEffect(() => {
     return () => {
@@ -36,10 +41,13 @@ function ContentScreen() {
         dispatch(addInfo(newInfo));
       }
     };
+
   }, [index]);
 
   useEffect(() => {
     return () => {
+      console.log("lessonIdx", lessonIdx)
+      // dispatch(changeLesson(lessonIdx))
       dispatch(resetIndex());
     };
   }, [lessonIdx]);
@@ -89,21 +97,23 @@ function ContentScreen() {
         <View className="flex-1 px-2 items-center">
 
           <View className="h-full w-full sm:w-2/3 md:w-2/3 lg:w-1/2">
-            {showHint && <Hint close={closeHint} />}
+            {/* {showHint && <Hint close={closeHint} />} */}
 
             <View className="mt-20 mb-3 ml-2">
-              <Text className="text-2xl font-bold">{onePageLesson.title}</Text>
+              <EditAbleText
+                className="text-2xl font-bold"
+                onSave={(data) => dispatch(updateLessonTitle({ lid: lessonIdx, title: data }))}
+              >{onePageLesson.title}</EditAbleText>
             </View>
 
-            <CardQuiz />
-            <YoutubeVideo />
-
+            {/* <CardQuiz /> */}
+            {/* <YoutubeVideo /> */}
 
 
             {onePageLesson.contents.slice(0, index).map((item, index) => {
               return <ContentContainer content={item.content.text} key={index} />
             })}
-            <Prompt />
+            {/* <Prompt /> */}
 
             {
               <View className="hidden sm:flex  px-2">

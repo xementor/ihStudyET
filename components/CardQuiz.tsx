@@ -3,6 +3,7 @@ import { withExpoSnack } from "nativewind"
 import { useState } from "react"
 import { GestureResponderEvent, Pressable, View, Text } from "react-native"
 import _ from 'lodash';
+import EditAbleText from "./EditableText";
 
 function CardQuiz() {
   const [isFlipped, setFlipped] = useState<boolean>(false)
@@ -58,7 +59,11 @@ function CardQuiz() {
     <View className="bg-slate-200 p-2">
       {!isFlipped &&
         <View>
-          <Text className="text-base py-2">What is the output of modifing the program to `print (message + message)` ?</Text>
+          <EditAbleText
+            className="text-base py-2"
+          >
+            What is the output of modifing the program to `print (message + message)` ?
+          </EditAbleText>
           <View className="py-2">
 
 
@@ -98,7 +103,9 @@ function CardQuiz() {
         isFlipped &&
         <View className="flex">
           <Text className="text-xl font-bold my-2">Explaination</Text>
-          <Text className="text-base my-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, ad molestiae sapiente aliquam amet, eveniet, quidem in quod nihil totam ipsam soluta nesciunt pariatur eum perferendis quaerat mollitia laboriosam! Illo!</Text>
+          <EditAbleText className="text-base my-4">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, ad molestiae sapiente aliquam amet, eveniet, quidem in quod nihil totam ipsam soluta nesciunt pariatur eum perferendis quaerat mollitia laboriosam! Illo!
+          </EditAbleText>
 
           <CardButton content="Back To the Problem" handlePress={handleButtonPress} />
         </View>
@@ -182,7 +189,7 @@ function CardOption({ selected, handlePress, disabled, multiChoice }: CardOption
         }
         />
       </View>
-      <Text className="">The Welcome message display once</Text>
+      <EditAbleText className="">The Welcome message display once</EditAbleText>
     </Pressable>
   )
 }

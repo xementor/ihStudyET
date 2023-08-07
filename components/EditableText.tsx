@@ -1,10 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput, TouchableOpacity, View, Text } from "react-native";
 
 export default function EditAbleText({ onSave, ...props }: Text['props'] & { onSave?: (edited: string) => void }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(props.children);
+
+  useEffect(() => {
+    setEditedText(props.children); // Reset editedText when props.children (onePageLesson.title) changes
+  }, [props.children]);
 
   const startEditing = () => {
     setIsEditing(true);

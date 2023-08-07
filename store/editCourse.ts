@@ -6,7 +6,7 @@ const initialState = {
 }
 
 const slice = createSlice({
-	name: "editLesson",
+	name: "editCourse",
 	initialState,
 	reducers: {
 		updateCourseTitle: (state, action: PayloadAction<string>) => {

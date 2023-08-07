@@ -2,6 +2,7 @@ import useTheme from '@/constants/theming/useTheme';
 import * as React from 'react';
 import { Text, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import Markdown from 'react-native-markdown-display';
+import EditAbleText from './EditableText';
 
 
 
@@ -14,6 +15,7 @@ interface ContentContainerProps {
 const ContentContainer = ({ content, style, varient = 'default' }: ContentContainerProps) => {
 
   const { colors: color } = useTheme()
+  const [editable, seteditable] = React.useState(true)
 
   const styles = StyleSheet.create({
     container: {
@@ -33,13 +35,16 @@ const ContentContainer = ({ content, style, varient = 'default' }: ContentContai
   return (
     <View style={[styles.container, style]}>
       {/* <Text style={styles.text}>{content}</Text> */}
-      <Markdown>
-        {content}
-      </Markdown>
+      {editable ?
+        <EditAbleText>
+          {content}
+        </EditAbleText> :
+        <Markdown>
+          {content}
+        </Markdown>
+      }
     </View>
   );
-
-
 };
 
 export default ContentContainer;
