@@ -158,7 +158,7 @@ function ContentScreen() {
 				/>
 			)
 		} else if (item.type == ContentType.question) {
-			return <CardQuiz mcq={item.content.mcq} />
+			return <CardQuiz question={item.content} cid={index} lid={lessonIdx} />
 		} else return <Text>no content</Text>
 	}
 }

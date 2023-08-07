@@ -5,12 +5,27 @@ import { GestureResponderEvent, Pressable, View, Text } from "react-native"
 import _ from "lodash"
 import EditAbleText from "./EditableText"
 import { CardQuizType } from "@/services/storage/model"
+import { useAppDispatch } from "@/app/hook"
+import {
+	updateMCQExplaination,
+	updateMCQOption,
+	updateMCQQuestion,
+} from "@/store/editLesson"
+import { useDispatch } from "react-redux"
 
-export default function CardQuiz({ mcq }: CardQuizType) {
+type CardQuizProps = {
+	question: CardQuizType
+	lid: number
+	cid: number
+}
+
+export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
+	const mcq = question.mcq
 	const [isFlipped, setFlipped] = useState<boolean>(false)
 	const [isOptionCorrect, setSelection] = useState<boolean>(false)
 	const [submitted, setSubmitted] = useState<boolean>(false)
 
+	const dispatch = useAppDispatch()
 	const [options, setOptions] = useState<number[]>([])
 	// const correctOptions = [2]
 
@@ -56,13 +71,20 @@ export default function CardQuiz({ mcq }: CardQuizType) {
 		<View className="bg-slate-200 p-2">
 			{!isFlipped && (
 				<View>
-					<EditAbleText className="text-base py-2">{mcq.question}</EditAbleText>
+					<EditAbleText
+						className="text-base py-2"
+						onSave={(question) =>
+							dispatch(updateMCQQuestion({ question, cid, lid }))
+						}>
+						{mcq.question}
+					</EditAbleText>
 					<View className="py-2">
 						{mcq.options.map((v, i) => (
 							<CardOption
 								option={v}
 								disabled={submitted}
 								key={i}
+								ids={{ oid: i, cid, lid }}
 								selected={options.indexOf(i) != -1}
 								multiChoice={mcq.correctOptions.length > 1}
 								handlePress={(ev) => handlePres(ev, i)}
@@ -90,7 +112,11 @@ export default function CardQuiz({ mcq }: CardQuizType) {
 			{isFlipped && (
 				<View className="flex">
 					<Text className="text-xl font-bold my-2">Explaination</Text>
-					<EditAbleText className="text-base my-4">
+					<EditAbleText
+						className="text-base my-4"
+						onSave={(explaination) =>
+							dispatch(updateMCQExplaination({ lid, cid, explaination }))
+						}>
 						{mcq.explaination}
 					</EditAbleText>
 
@@ -134,6 +160,7 @@ export function CardButton({
 }
 
 type CardOptionProps = {
+	ids: { oid: number; cid: number; lid: number }
 	option: string
 	selected: boolean
 	handlePress: (event: GestureResponderEvent) => void
@@ -142,13 +169,15 @@ type CardOptionProps = {
 }
 function CardOption({
 	option,
-
+	ids,
 	selected,
 	handlePress,
 	disabled,
 	multiChoice,
 }: CardOptionProps) {
+	const dispatch = useDispatch()
 	const [hovered, setHovered] = useState(false)
+	const { cid, lid, oid } = ids
 
 	return (
 		<Pressable
@@ -177,7 +206,13 @@ function CardOption({
 					)}
 				/>
 			</View>
-			<EditAbleText className="">{option}</EditAbleText>
+			<EditAbleText
+				onSave={(option) =>
+					dispatch(updateMCQOption({ option, cid, lid, oid }))
+				}
+				className="">
+				{option}
+			</EditAbleText>
 		</Pressable>
 	)
 }

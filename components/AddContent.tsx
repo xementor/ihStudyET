@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/app/hook"
 import { ContentType } from "@/services/storage/model"
-import { addNewTextContent } from "@/store/editLesson"
+import { addNewMCQ, addNewTextContent } from "@/store/editLesson"
 import clsx from "clsx"
 import { useState } from "react"
 import { View, Pressable, Text } from "react-native"
@@ -18,6 +18,7 @@ export default function AddContent({ lid }: { lid: number }) {
 		if (selectedType == ContentType.info) {
 			dispatch(addNewTextContent({ lid }))
 		} else if (selectedType == ContentType.question) {
+			dispatch(addNewMCQ({ lid }))
 		}
 	}
 
