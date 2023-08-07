@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { withExpoSnack } from "nativewind"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { GestureResponderEvent, Pressable, View, Text } from "react-native"
 import _ from "lodash"
 import EditAbleText from "./EditableText"
@@ -10,6 +10,7 @@ import {
 	updateMCQExplaination,
 	updateMCQOption,
 	updateMCQQuestion,
+	updateMCQanswer,
 } from "@/store/editLesson"
 import { useDispatch } from "react-redux"
 
@@ -20,7 +21,7 @@ type CardQuizProps = {
 }
 
 export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
-	const [editabl, setEditable] = useState(false)
+	const [editabl, setEditable] = useState(true)
 	const mcq = question.mcq
 	const [isFlipped, setFlipped] = useState<boolean>(false)
 	const [isOptionCorrect, setSelection] = useState<boolean>(false)
@@ -29,6 +30,13 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 	const dispatch = useAppDispatch()
 	const [options, setOptions] = useState<number[]>([])
 	// const correctOptions = [2]
+	useEffect(() => {
+		if (editabl) {
+			setOptions(mcq.correctOptions)
+		} else {
+			setOptions([])
+		}
+	}, [editabl])
 
 	function handlePres(event: GestureResponderEvent, i: number): void {
 		if (submitted) return
@@ -67,6 +75,13 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 			}
 		}
 	}
+	const getSelected = (i: number) => {
+		return options.indexOf(i) != -1
+	}
+
+	function setCorrectOption(event: GestureResponderEvent): void {
+		dispatch(updateMCQanswer({ lid, cid, ans: options }))
+	}
 
 	return (
 		<View className="bg-slate-200 p-2">
@@ -96,7 +111,7 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 					</View>
 
 					<View className={!submitted ? "flex-row" : "flex-col"}>
-						{!submitted && (
+						{!editabl && !submitted && (
 							<CardButton
 								handlePress={handleSubmit}
 								type={_.isEmpty(options) ? "disable" : "background"}
@@ -109,7 +124,9 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 							content="Explaination"
 							handlePress={handleButtonPress}
 						/>
-						{editabl && <CardButton content="setCorrect" />}
+						{editabl && (
+							<CardButton content="setCorrect" handlePress={setCorrectOption} />
+						)}
 					</View>
 				</View>
 			)}

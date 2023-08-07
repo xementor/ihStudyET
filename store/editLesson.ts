@@ -94,6 +94,16 @@ const slice = createSlice({
 				quest.content.mcq.explaination = explaination
 			}
 		},
+		updateMCQanswer: (
+			state,
+			action: PayloadAction<{ lid: number; cid: number; ans: number[] }>
+		) => {
+			const { lid, cid, ans } = action.payload
+			const quest = state.lessons[lid].contents[cid]
+			if (quest.type == ContentType.question) {
+				quest.content.mcq.correctOptions = ans
+			}
+		},
 	},
 })
 
@@ -105,5 +115,6 @@ export const {
 	updateMCQQuestion,
 	updateMCQOption,
 	updateMCQExplaination,
+	updateMCQanswer,
 } = slice.actions
 export default slice.reducer
