@@ -1,54 +1,55 @@
 export interface Course {
-  title: string,
-  chapters: Chapter[],
-
+	title: string
+	chapters: Chapter[]
 }
 
-export interface  Chapter {
-  title: string,
-  lessons: Lesson[];
+export interface Chapter {
+	title: string
+	lessons: Lesson[]
 }
 
 export interface Lesson {
-  title: string,
-  contents?: Content[],
-  subLessons?: SubLesson[],
+	title: string
+	contents?: Content[]
+	subLessons?: SubLesson[]
 }
 
-export interface SubLesson { // One page
-  title: string,
-  contents: Content[],
+export interface SubLesson {
+	// One page
+	title: string
+	contents: Content[]
 }
-export type Content = {
-  type: ContentType.info;
-  content: Info;
-} | {
-  type: ContentType.question;
-  content: Question;
-};
+export type Content =
+	| {
+			type: ContentType.info
+			content: Info
+	  }
+	| {
+			type: ContentType.question
+			content: Question
+	  }
 
 export interface Info {
-  text: string,
+	text: string
 }
-export type Question = {
-  type: QuestionType,
-  text: string,
-  options: Option[]
+
+export type Question = CardQuizType
+
+export type CardQuizType = {
+	mcq: {
+		question: string
+		options: string[]
+		correctOptions: number[]
+		explaination: string
+	}
 }
 
 export interface Option {
-  text: string,
-  explanation?: string,
-  isCorrect?: boolean,
+	text: string
+	explanation?: string
+	isCorrect?: boolean
 }
 export enum ContentType {
-  info,
-  question,
-}
-
-export enum QuestionType {
-  option,
-  multiChoice,
-  matching,
-  fillGap
+	info,
+	question,
 }

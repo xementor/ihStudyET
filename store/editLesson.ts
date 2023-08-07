@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ContentType, Info, SubLesson } from "@/services/storage/model"
+import { Content, ContentType, Info, SubLesson } from "@/services/storage/model"
 import { cLesson1, cLesson2, cLesson3 } from "@/services/storage/c"
 
 const lessons = [cLesson1, cLesson2, cLesson3]
@@ -26,7 +26,11 @@ const slice = createSlice({
 			action: PayloadAction<{ lid: number; cid: number; content: string }>
 		) => {
 			const { lid, cid, content } = action.payload
-			state.lessons[lid].contents[cid].content.text = content
+			const upDatedContent: Content = {
+				type: ContentType.info,
+				content: { text: content },
+			}
+			state.lessons[lid].contents[cid] = upDatedContent
 		},
 		addNewTextContent: (state, action: PayloadAction<{ lid: number }>) => {
 			const { lid } = action.payload

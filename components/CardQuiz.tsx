@@ -4,16 +4,9 @@ import { useState } from "react"
 import { GestureResponderEvent, Pressable, View, Text } from "react-native"
 import _ from "lodash"
 import EditAbleText from "./EditableText"
+import { CardQuizType } from "@/services/storage/model"
 
-type CardQuizProps = {
-	mcq: {
-		question: string
-		options: string[]
-		correctOptions: number[]
-		explaination: string
-	}
-}
-export default function CardQuiz({ mcq }: CardQuizProps) {
+export default function CardQuiz({ mcq }: CardQuizType) {
 	const [isFlipped, setFlipped] = useState<boolean>(false)
 	const [isOptionCorrect, setSelection] = useState<boolean>(false)
 	const [submitted, setSubmitted] = useState<boolean>(false)
