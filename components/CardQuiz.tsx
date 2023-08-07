@@ -1,18 +1,17 @@
-import clsx from "clsx"
-import { withExpoSnack } from "nativewind"
-import { useEffect, useState } from "react"
-import { GestureResponderEvent, Pressable, View, Text } from "react-native"
-import _ from "lodash"
-import EditAbleText from "./EditableText"
-import { CardQuizType } from "@/services/storage/model"
 import { useAppDispatch } from "@/app/hook"
+import { CardQuizType } from "@/services/storage/model"
 import {
 	updateMCQExplaination,
 	updateMCQOption,
 	updateMCQQuestion,
 	updateMCQanswer,
 } from "@/store/editLesson"
+import clsx from "clsx"
+import _ from "lodash"
+import { useEffect, useState } from "react"
+import { GestureResponderEvent, Pressable, Text, View } from "react-native"
 import { useDispatch } from "react-redux"
+import EditAbleText from "./EditableText"
 
 type CardQuizProps = {
 	question: CardQuizType
