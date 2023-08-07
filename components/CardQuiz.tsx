@@ -20,6 +20,7 @@ type CardQuizProps = {
 }
 
 export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
+	const [editabl, setEditable] = useState(false)
 	const mcq = question.mcq
 	const [isFlipped, setFlipped] = useState<boolean>(false)
 	const [isOptionCorrect, setSelection] = useState<boolean>(false)
@@ -31,7 +32,7 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 
 	function handlePres(event: GestureResponderEvent, i: number): void {
 		if (submitted) return
-		if (mcq.correctOptions.length > 1) {
+		if (mcq.correctOptions.length > 1 || editabl) {
 			setOptions((prevOptions) => {
 				const index = prevOptions.indexOf(i)
 				if (index !== -1) {
@@ -82,10 +83,12 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 						{mcq.options.map((v, i) => (
 							<CardOption
 								option={v}
-								disabled={submitted}
+								disabled={submitted && !editabl}
 								key={i}
 								ids={{ oid: i, cid, lid }}
 								selected={options.indexOf(i) != -1}
+								isCorrect={mcq.correctOptions.indexOf(i) != -1}
+								submitted={submitted}
 								multiChoice={mcq.correctOptions.length > 1}
 								handlePress={(ev) => handlePres(ev, i)}
 							/>
@@ -106,6 +109,7 @@ export default function CardQuiz({ question, lid, cid }: CardQuizProps) {
 							content="Explaination"
 							handlePress={handleButtonPress}
 						/>
+						{editabl && <CardButton content="setCorrect" />}
 					</View>
 				</View>
 			)}
@@ -166,6 +170,8 @@ type CardOptionProps = {
 	handlePress: (event: GestureResponderEvent) => void
 	disabled?: boolean
 	multiChoice: boolean
+	isCorrect: boolean
+	submitted: boolean
 }
 function CardOption({
 	option,
@@ -174,6 +180,8 @@ function CardOption({
 	handlePress,
 	disabled,
 	multiChoice,
+	isCorrect,
+	submitted,
 }: CardOptionProps) {
 	const dispatch = useDispatch()
 	const [hovered, setHovered] = useState(false)
@@ -210,7 +218,10 @@ function CardOption({
 				onSave={(option) =>
 					dispatch(updateMCQOption({ option, cid, lid, oid }))
 				}
-				className="">
+				className={clsx(
+					submitted && isCorrect && "text-blue-800",
+					submitted && selected && !isCorrect && "text-red-600"
+				)}>
 				{option}
 			</EditAbleText>
 		</Pressable>
