@@ -111,7 +111,7 @@ function ContentScreen() {
 
 
             {onePageLesson.contents.slice(0, index).map((item, index) => {
-              return <ContentContainer content={item.content.text} key={index} />
+              return <ContentContainer content={item.content.text} key={index} cid={index} lid={lessonIdx} />
             })}
             {/* <Prompt /> */}
 

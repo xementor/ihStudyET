@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Text, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import EditAbleText from './EditableText';
+import { useAppDispatch } from '@/app/hook';
+import { updateContentText } from '@/store/editLesson';
 
 
 
@@ -10,12 +12,15 @@ interface ContentContainerProps {
   varient?: 'primary' | 'default',
   content: string,
   style?: StyleProp<ViewStyle>,
+  lid: number, // lessonId
+  cid: number, // contentId
 }
 
-const ContentContainer = ({ content, style, varient = 'default' }: ContentContainerProps) => {
+const ContentContainer = ({ lid, cid, content, style, varient = 'default' }: ContentContainerProps) => {
 
   const { colors: color } = useTheme()
   const [editable, seteditable] = React.useState(true)
+  const dispatch = useAppDispatch()
 
   const styles = StyleSheet.create({
     container: {
@@ -32,11 +37,12 @@ const ContentContainer = ({ content, style, varient = 'default' }: ContentContai
     }
   });
 
+
   return (
     <View style={[styles.container, style]}>
       {/* <Text style={styles.text}>{content}</Text> */}
       {editable ?
-        <EditAbleText>
+        <EditAbleText onSave={(des) => dispatch(updateContentText({ lid: lid, cid: cid, content: des }))}>
           {content}
         </EditAbleText> :
         <Markdown>
