@@ -36,6 +36,14 @@ const slice = createSlice({
 				content: textContent,
 			})
 		},
+		addNewMCQ: (state, action: PayloadAction<{ lid: number }>) => {
+			const { lid } = action.payload
+			const textContent: Info = { text: "write something" }
+			state.lessons[lid].contents.push({
+				type: ContentType.info,
+				content: textContent,
+			})
+		},
 	},
 })
 
