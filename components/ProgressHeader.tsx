@@ -13,7 +13,7 @@ import { ColorType } from '@/constants/theming/types';
 import { Link } from 'expo-router';
 
 
-export const lessons = [cLesson1, cLesson2, cLesson3];
+
 
 const StyledFontAwesome = styled(FontAwesome)
 const StyledIB = styled(IB)
@@ -29,6 +29,7 @@ function ProgessHeader() {
   const { colors } = useTheme()
   const { lessonIdx } = useAppSelector((state) => state.lesson);
   const { index: subLessonIdx } = useAppSelector(state => state.subLesson)
+  const { lessons } = useAppSelector((state) => state.editLesson)
 
   const handlePress = () => {
     dispatch(showSheet())

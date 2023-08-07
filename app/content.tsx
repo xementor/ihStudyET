@@ -8,14 +8,15 @@ import { ContentType } from "../services/storage/model";
 import { addInfo, incrementIndex, resetIndex } from "../store/sublesson";
 import { useAppSelector, useAppDispatch } from "./hook";
 import { incrementLessonIdx } from "../store/lessons";
-import ProgressHeader, { lessons } from "@/components/ProgressHeader";
+import ProgressHeader from "@/components/ProgressHeader";
 import { withExpoSnack } from "nativewind";
 import CardQuiz from "@/components/CardQuiz";
 import { Hint } from "@/components/Hint";
 import Prompt from "@/components/Prompt";
 import YoutubeVideo from "@/components/YoutubeVideo";
 import EditAbleText from "@/components/EditableText";
-import { updateLessonTitle } from "@/store/editLesson";
+import { addNewTextContent, updateLessonTitle } from "@/store/editLesson";
+import { IconButton } from "react-native-paper";
 
 
 
@@ -24,6 +25,7 @@ import { updateLessonTitle } from "@/store/editLesson";
 function ContentScreen() {
   const [showButton, setShowButton] = useState(true);
   const [showHint, setHint] = useState(true)
+  const [editabl, setEditable] = useState(true)
   const scrollViewRef = useRef<ScrollView>(null);
   const { index } = useAppSelector((state) => state.subLesson);
   const { lessonIdx } = useAppSelector((state) => state.lesson);
@@ -57,6 +59,14 @@ function ContentScreen() {
   }
 
   function onPress() {
+    if (editabl) {
+      if (lessonIdx >= lessons.length - 1) {
+        return;
+      }
+      dispatch(incrementLessonIdx());
+      return
+    }
+
     if (index >= onePageLesson.contents.length - 1) {
       // Handle lesson progression
       if (lessonIdx >= lessons.length - 1) {
@@ -110,10 +120,27 @@ function ContentScreen() {
             {/* <YoutubeVideo /> */}
 
 
-            {onePageLesson.contents.slice(0, index).map((item, index) => {
-              return <ContentContainer content={item.content.text} key={index} cid={index} lid={lessonIdx} />
-            })}
+
+            {
+              editabl ?
+                onePageLesson.contents.map((item, index) => {
+                  return <ContentContainer content={item.content.text} key={index} cid={index} lid={lessonIdx} />
+                })
+                :
+                onePageLesson.contents.slice(0, index).map((item, index) => {
+                  return <ContentContainer content={item.content.text} key={index} cid={index} lid={lessonIdx} />
+                })
+            }
+
             {/* <Prompt /> */}
+
+            <IconButton icon="plus" className="bg-blue-100"
+              onPress={
+                () => {
+                  dispatch(addNewTextContent({ lid: lessonIdx }))
+                }
+              }
+            />
 
             {
               <View className="hidden sm:flex  px-2">

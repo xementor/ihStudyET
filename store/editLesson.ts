@@ -1,6 +1,8 @@
-import { lessons } from "@/components/ProgressHeader"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ContentType, SubLesson } from "@/services/storage/model"
+import { ContentType, Info, SubLesson } from "@/services/storage/model"
+import { cLesson1, cLesson2, cLesson3 } from "@/services/storage/c"
+
+const lessons = [cLesson1, cLesson2, cLesson3]
 
 const initialState = {
 	lessons: lessons,
@@ -26,8 +28,17 @@ const slice = createSlice({
 			const { lid, cid, content } = action.payload
 			state.lessons[lid].contents[cid].content.text = content
 		},
+		addNewTextContent: (state, action: PayloadAction<{ lid: number }>) => {
+			const { lid } = action.payload
+			const textContent: Info = { text: "write something" }
+			state.lessons[lid].contents.push({
+				type: ContentType.info,
+				content: textContent,
+			})
+		},
 	},
 })
 
-export const { updateContentText, updateLessonTitle } = slice.actions
+export const { updateContentText, updateLessonTitle, addNewTextContent } =
+	slice.actions
 export default slice.reducer
