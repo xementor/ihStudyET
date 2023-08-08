@@ -3,7 +3,7 @@ import { CardQuizType, Content, Info } from "../services/storage/model"
 
 interface SubLessonState {
 	index: number
-	contents: (Info | CardQuizType)[]
+	contents: Content[]
 }
 const initialState: SubLessonState = {
 	index: 0,
@@ -18,7 +18,7 @@ const slice = createSlice({
 		incrementIndex: (state) => {
 			state.index++
 		},
-		addInfo: (state, action: PayloadAction<Info | CardQuizType>) => {
+		addContent: (state, action: PayloadAction<Content>) => {
 			state.contents.push(action.payload)
 		},
 		resetIndex: (state) => {
@@ -28,5 +28,5 @@ const slice = createSlice({
 	},
 })
 
-export const { incrementIndex, addInfo, resetIndex } = slice.actions
+export const { incrementIndex, addContent, resetIndex } = slice.actions
 export default slice.reducer

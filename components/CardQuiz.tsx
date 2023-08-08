@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { GestureResponderEvent, Pressable, Text, View } from "react-native"
 import { useDispatch } from "react-redux"
 import EditAbleText from "./EditableText"
+import { Hoverable } from "./Themed"
 
 type CardQuizProps = {
 	question: CardQuizType
@@ -170,12 +171,15 @@ export function CardButton({
 	else commonStyle += "bg-black text-white"
 
 	return (
-		<Pressable
+		<Hoverable
+			hoveredStyle="bg-blue-300 rounded-lg"
 			disabled={type === "disable"}
 			onPress={handlePress}
-			className={clsx(`flex justify-center items-start ${style}`)}>
+			className={clsx(
+				`flex justify-center items-start active:bg-blue-600 ${style}`
+			)}>
 			<Text className={commonStyle}>{content}</Text>
-		</Pressable>
+		</Hoverable>
 	)
 }
 

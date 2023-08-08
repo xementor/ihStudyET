@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/app/hook"
 import { ContentType } from "@/services/storage/model"
-import { addNewMCQ, addNewTextContent } from "@/store/editLesson"
+import { addNewMCQ, addNewTextContent, addPrompt } from "@/store/editLesson"
 import clsx from "clsx"
 import { useState } from "react"
 import { View, Pressable, Text } from "react-native"
@@ -19,6 +19,8 @@ export default function AddContent({ lid }: { lid: number }) {
 			dispatch(addNewTextContent({ lid }))
 		} else if (selectedType == ContentType.question) {
 			dispatch(addNewMCQ({ lid }))
+		} else if (selectedType == ContentType.prompt) {
+			dispatch(addPrompt({ lid }))
 		}
 	}
 
@@ -28,6 +30,7 @@ export default function AddContent({ lid }: { lid: number }) {
 
 			<ContentTypeOpton type={ContentType.info} />
 			<ContentTypeOpton type={ContentType.question} />
+			<ContentTypeOpton type={ContentType.prompt} />
 		</View>
 	)
 
@@ -37,6 +40,8 @@ export default function AddContent({ lid }: { lid: number }) {
 			text = "Text"
 		} else if (type == ContentType.question) {
 			text = "MCQ"
+		} else if (type == ContentType.prompt) {
+			text = "Prompt"
 		}
 
 		return (

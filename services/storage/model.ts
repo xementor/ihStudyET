@@ -29,6 +29,10 @@ export type Content =
 			type: ContentType.question
 			content: CardQuizType
 	  }
+	| {
+			type: ContentType.prompt
+			content: PromptType
+	  }
 
 // Content Type
 export interface Info {
@@ -44,6 +48,12 @@ export type CardQuizType = {
 	}
 }
 
+export type PromptType = {
+	text: string
+	options: { option: string; explaination?: string }[]
+	answerIdx: number
+}
+
 export interface Option {
 	text: string
 	explanation?: string
@@ -52,4 +62,5 @@ export interface Option {
 export enum ContentType {
 	info,
 	question,
+	prompt,
 }

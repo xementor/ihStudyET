@@ -12,8 +12,8 @@ import {
 import ContentContainer from "../components/content_container"
 import AppButton from "../components/AppButton"
 
-import { Content, ContentType } from "../services/storage/model"
-import { addInfo, incrementIndex, resetIndex } from "../store/sublesson"
+import { Content, ContentType, Info } from "../services/storage/model"
+import { addContent, incrementIndex, resetIndex } from "../store/sublesson"
 import { useAppSelector, useAppDispatch } from "./hook"
 import { incrementLessonIdx } from "../store/lessons"
 import ProgressHeader from "@/components/ProgressHeader"
@@ -31,27 +31,26 @@ import AddContent from "@/components/AddContent"
 function ContentScreen() {
 	const [showButton, setShowButton] = useState(true)
 	const [showHint, setHint] = useState(true)
-	const [editabl, setEditable] = useState(true)
 	const scrollViewRef = useRef<ScrollView>(null)
 	const { index } = useAppSelector((state) => state.subLesson)
 	const { lessonIdx } = useAppSelector((state) => state.lesson)
 	const dispatch = useAppDispatch()
 
-	const { lessons } = useAppSelector((state) => state.editLesson)
+	const { lessons, edible } = useAppSelector((state) => state.editLesson)
 	const onePageLesson = lessons[lessonIdx]
 
 	useEffect(() => {
 		return () => {
 			if (onePageLesson.contents[index].type === ContentType.info) {
-				const newContent = onePageLesson.contents[index].content
-				dispatch(addInfo(newContent))
+				const newContent = onePageLesson.contents[index]
+				dispatch(addContent(newContent))
 			}
 		}
 	}, [index])
 
 	useEffect(() => {
 		return () => {
-			console.log("lessonIdx", lessonIdx)
+			// console.log("lessonIdx", lessonIdx)
 			// dispatch(changeLesson(lessonIdx))
 			dispatch(resetIndex())
 		}
@@ -62,7 +61,7 @@ function ContentScreen() {
 	}
 
 	function onPress() {
-		if (editabl) {
+		if (edible) {
 			if (lessonIdx >= lessons.length - 1) {
 				return
 			}
@@ -120,7 +119,7 @@ function ContentScreen() {
 						</View>
 
 						{/* <YoutubeVideo /> */}
-						{editabl
+						{edible
 							? onePageLesson.contents.map((item, index) => {
 									return renderItem(item, index)
 							  })
@@ -128,7 +127,6 @@ function ContentScreen() {
 									return renderItem(item, index)
 							  })}
 
-						{/* <Prompt /> */}
 						<AddContent lid={lessonIdx} />
 
 						{
@@ -147,7 +145,7 @@ function ContentScreen() {
 		</>
 	)
 
-	function renderItem(item: Content, index: number) {
+	function renderItem(item: Content, cid: number) {
 		if (item.type == ContentType.info) {
 			return (
 				<ContentContainer
@@ -158,7 +156,9 @@ function ContentScreen() {
 				/>
 			)
 		} else if (item.type == ContentType.question) {
-			return <CardQuiz question={item.content} cid={index} lid={lessonIdx} />
+			return <CardQuiz question={item.content} cid={cid} lid={lessonIdx} />
+		} else if (item.type == ContentType.prompt) {
+			return <Prompt prompt={item.content} ids={{ cid, lid: lessonIdx }} />
 		} else return <Text>no content</Text>
 	}
 }

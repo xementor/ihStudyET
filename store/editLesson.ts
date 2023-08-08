@@ -4,6 +4,7 @@ import {
 	Content,
 	ContentType,
 	Info,
+	PromptType,
 } from "@/services/storage/model"
 import { chapter } from "@/services/storage/chapter"
 
@@ -11,6 +12,7 @@ const lessons = chapter.subChapters[0].lessons
 
 const initialState = {
 	lessons: lessons,
+	edible: true,
 }
 
 const slice = createSlice({
@@ -104,6 +106,65 @@ const slice = createSlice({
 				quest.content.mcq.correctOptions = ans
 			}
 		},
+		addPrompt: (state, action: PayloadAction<{ lid: number }>) => {
+			const { lid } = action.payload
+			const contents = state.lessons[lid].contents
+			const newPrompt: PromptType = {
+				text: "Why you shoudl choose that",
+				options: [
+					{ option: "Yes", explaination: "why yes" },
+					{ option: "No", explaination: "why NO" },
+				],
+				answerIdx: 1,
+			}
+			contents.push({ content: newPrompt, type: ContentType.prompt })
+		},
+		addPromptOption: (
+			state,
+			action: PayloadAction<{
+				lid: number
+				cid: number
+			}>
+		) => {
+			const { lid, cid } = action.payload
+			const quest = state.lessons[lid].contents[cid]
+			if (quest.type == ContentType.prompt) {
+				quest.content.options.push({
+					option: "Another Option",
+					explaination: "explainatin for that",
+				})
+			}
+		},
+		UpdatePromptOption: (
+			state,
+			action: PayloadAction<{
+				lid: number
+				cid: number
+				pid: number
+				text: string
+			}>
+		) => {
+			const { lid, cid, pid, text } = action.payload
+			const quest = state.lessons[lid].contents[cid]
+			if (quest.type == ContentType.prompt) {
+				quest.content.options[pid].option = text
+			}
+		},
+		UpdatePromptExplaination: (
+			state,
+			action: PayloadAction<{
+				lid: number
+				cid: number
+				pid: number
+				exp: string
+			}>
+		) => {
+			const { lid, cid, pid, exp } = action.payload
+			const quest = state.lessons[lid].contents[cid]
+			if (quest.type == ContentType.prompt) {
+				quest.content.options[pid].explaination = exp
+			}
+		},
 	},
 })
 
@@ -116,5 +177,9 @@ export const {
 	updateMCQOption,
 	updateMCQExplaination,
 	updateMCQanswer,
+	addPrompt,
+	addPromptOption,
+	UpdatePromptOption,
+	UpdatePromptExplaination,
 } = slice.actions
 export default slice.reducer
