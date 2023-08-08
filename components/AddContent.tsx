@@ -31,6 +31,7 @@ export default function AddContent({ lid }: { lid: number }) {
 			<ContentTypeOpton type={ContentType.info} />
 			<ContentTypeOpton type={ContentType.question} />
 			<ContentTypeOpton type={ContentType.prompt} />
+			<ContentTypeOpton type={ContentType.image} />
 		</View>
 	)
 
@@ -42,6 +43,8 @@ export default function AddContent({ lid }: { lid: number }) {
 			text = "MCQ"
 		} else if (type == ContentType.prompt) {
 			text = "Prompt"
+		} else if (type == ContentType.image) {
+			text = "Image"
 		}
 
 		return (

@@ -33,6 +33,10 @@ export type Content =
 			type: ContentType.prompt
 			content: PromptType
 	  }
+	| {
+			type: ContentType.image
+			content: ImageType
+	  }
 
 // Content Type
 export interface Info {
@@ -53,14 +57,14 @@ export type PromptType = {
 	options: { option: string; explaination?: string }[]
 	answerIdx: number
 }
-
-export interface Option {
-	text: string
-	explanation?: string
-	isCorrect?: boolean
+export type ImageType = {
+	url: string
+	alt?: string
 }
+
 export enum ContentType {
 	info,
 	question,
 	prompt,
+	image,
 }
