@@ -1,5 +1,10 @@
 import { SafeArea } from './safe-area'
+import { StoreReduxProvider } from './store-redux'
 
 export function Provider({ children }: { children: React.ReactNode }) {
-  return <SafeArea>{children}</SafeArea>
+  return (
+    <StoreReduxProvider>
+      <SafeArea>{children}</SafeArea>
+    </StoreReduxProvider>
+  )
 }

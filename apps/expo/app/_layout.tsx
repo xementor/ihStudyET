@@ -1,56 +1,85 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { useEffect, useState } from 'react'
+import { useFonts } from 'expo-font'
+import { SplashScreen, Stack } from 'expo-router'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { Provider } from 'app/provider'
+
+// import "../main.css";
+// import { getAuth, onAuthStateChanged } from "firebase/auth"
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from 'expo-router'
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
+  initialRouteName: 'login',
+}
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
-  });
+  })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (error) throw error
+  }, [error])
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
     }
-  }, [loaded]);
+  }, [loaded])
 
   if (!loaded) {
-    return null;
+    return null
   }
 
-  return <RootLayoutNav />;
+  return (
+    <Provider>
+      <RootLayoutNav />
+    </Provider>
+  )
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const [loading, setLoading] = useState(true)
+
+  // useEffect(() => {
+  //   console.log('hi')
+  //   const auth = getAuth()
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const uid = user
+  //       dispatch(updateUser(user))
+  //       setLoading(false)
+  //     } else {
+  //       setLoading(false)
+  //     }
+  //   })
+  // }, [])
+
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <Text>Loading</Text>
+  //     </>
+  //   )
+  // }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="content" options={{ headerShown: false }} />
+      <Stack.Screen name="login" options={{ headerShown: false }} />
+      <Stack.Screen name="registration" options={{ headerShown: false }} />
+    </Stack>
+  )
 }
