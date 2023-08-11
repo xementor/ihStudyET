@@ -7,7 +7,7 @@ import {
   Text as DefaultText,
   useColorScheme,
   View as DefaultView,
-  Pressable,
+  Pressable as RNPressable,
   PressableProps,
 } from 'react-native'
 import { DarkTheme, DefaultTheme } from 'app/design/Colors'
@@ -46,7 +46,7 @@ export function Text(props: TextProps) {
   return <DefaultText style={[{ color }, style]} {...otherProps} />
 }
 
-const StyledPressable = styled(Pressable)
+const Pressable = styled(RNPressable)
 export const P = styled(DefaultText, 'text-base text-black my-4')
 
 export function Hoverable({

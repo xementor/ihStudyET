@@ -1,4 +1,4 @@
-import { Text, View, Image, Pressable } from 'react-native'
+import { Text, View, Pressable } from 'app/design/styled'
 import AppButton from './AppButton'
 import { Link } from 'expo-router'
 

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { Pressable, Text } from 'app/design/styled'
 
 import useTheme from 'app/design/theming/useTheme'
 
@@ -18,7 +18,7 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
   const { colors: color } = useTheme()
 
   return (
-    <TouchableOpacity
+    <Pressable
       className="mb-5 flex w-full flex-row justify-center rounded-md py-2"
       style={{ backgroundColor: color.onBackground }}
       onPress={onPress}
@@ -26,7 +26,7 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
       <Text className="text-lg" style={{ color: color.background }}>
         {content}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

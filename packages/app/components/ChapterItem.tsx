@@ -2,8 +2,8 @@ import { useAppDispatch } from 'app/services/hooks/hook'
 import { Chapter } from 'app/services/storage/model'
 import { updateChapterTitle } from 'app/store/editCourse'
 import React, { useState } from 'react'
-import { View, Pressable, Text } from 'react-native'
-import { IconButton } from 'react-native-paper'
+import { View, Pressable, Text } from 'app/design/styled'
+// import { IconButton } from 'react-native-paper'
 import EditAbleText from './EditableText'
 import { SubChapterItem, subLessonState } from './SubChapterItem'
 
@@ -40,11 +40,11 @@ export const ChapterItem: React.FC<ChapterItemProps> = ({ index, chapter }) => {
               {chapter.title}
             </EditAbleText>
           </View>
-          <IconButton
+          {/* <IconButton
             icon={expanded ? 'chevron-up' : 'chevron-down'}
             size={25}
             onPress={handlePress}
-          />
+          /> */}
         </View>
       </Pressable>
       {expanded &&

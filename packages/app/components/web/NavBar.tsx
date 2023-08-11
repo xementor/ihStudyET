@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { View, Text, Pressable } from 'react-native'
-
+import { View, Text } from 'app/design/styled'
 import useTheme from 'app/design/theming/useTheme'
 import clsx from 'clsx'
-import { Hoverable, P } from '../Themed'
+import { Hoverable } from '../Themed'
 
 type NavProps = {
   onHamberge?: () => void

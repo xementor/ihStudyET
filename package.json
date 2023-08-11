@@ -18,5 +18,9 @@
     "native": "cd apps/expo && yarn start",
     "web": "cd apps/next && yarn next"
   },
+  "nohoist": [
+    "**/expo-router",
+    "**/expo-router/**"
+  ],
   "packageManager": "yarn@3.4.1"
 }

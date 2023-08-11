@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { View, Text, Platform } from 'react-native'
+import { View, Text } from 'app/design/styled'
+import { Platform } from 'react-native'
 import { styled } from 'nativewind'
 
 import CourseCover from 'app/components/CourseCover'
@@ -9,6 +10,12 @@ import { useAppSelector } from 'app/services/hooks/hook'
 import LoginScreen from 'app/features/auth/login/login-screen'
 
 const CoursesScreen = () => {
+  // return (
+  //   <View className="flex-1 items-center justify-center bg-red-100">
+  //     <Text className="mb-4 text-center font-bold">{`User ID: ${1}`}</Text>
+  //     <Text href="/">👈 Go Home</Text>
+  //   </View>
+  // )
   const [loading, setLoading] = useState(true)
   const { user } = useAppSelector((state) => state.user)
 

@@ -1,14 +1,13 @@
-import MaterialIcons from '@expo/vector-icons/build/MaterialIcons'
+// import MaterialIcons from '@expo/vector-icons/build/MaterialIcons'
 import React, { useRef, useState } from 'react'
 import {
   Animated,
   FlatList,
   Platform,
-  ScrollView,
-  Text,
-  View,
+  ScrollView as NativeScrollView,
 } from 'react-native'
-import { IconButton } from 'react-native-paper'
+import { ScrollView, Text, View } from 'app/design/styled'
+// import { IconButton } from 'react-native-paper'
 
 import { ScoreComponent } from 'app/components/ProgressHeader'
 import Nav from 'app/components/web/NavBar'
@@ -25,7 +24,7 @@ export default function CourseScreen() {
   const HEADER_MAX_HEIGHT = 250 // Set your desired maximum height for the top bar
   const HEADER_MIN_HEIGHT = 170 // Set your desired minimum height for the top bar
   const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
-  const scrollViewRef = useRef<ScrollView>(null)
+  const scrollViewRef = useRef<NativeScrollView>(null)
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -100,7 +99,7 @@ export default function CourseScreen() {
           style={{ elevation: 5 }}
         >
           <View className="flex flex-row justify-between">
-            <IconButton icon="chevron-left" />
+            {/* <IconButton icon="chevron-left" /> */}
             <ScoreComponent color="black" />
           </View>
 
@@ -156,11 +155,12 @@ const CourseCoverScrollPart: React.FC<{ courseDescription: string }> = ({
 
       <View className="flex flex-row items-center justify-between">
         <View className="flex flex-row items-center">
-          <MaterialIcons name="notes" size={25} className="p-2 md:p-3" />
+          {/* <MaterialIcons name="notes" size={25} className="p-2 md:p-3" /> */}
+
           <Text className="ml-4">19 Lessons</Text>
         </View>
 
-        <IconButton icon="chevron-down" size={25} onPress={() => {}} />
+        {/* <IconButton icon="chevron-down" size={25} onPress={() => {}} /> */}
       </View>
     </View>
   )

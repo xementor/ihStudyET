@@ -6,26 +6,26 @@ import EditAbleText from './EditableText'
 import { useAppDispatch } from 'app/services/hooks/hook'
 import { updateContentText } from 'app/store/editLesson'
 
-interface MarkdownWithChildrenProps extends MarkdownProps {
-  children: React.ReactNode
-}
+// interface MarkdownWithChildrenProps extends MarkdownProps {
+//   children: React.ReactNode
+// }
 
-const MarkdownWithChildren: React.FC<MarkdownWithChildrenProps> = ({
-  children,
-  ...restProps
-}) => {
-  const content = React.Children.toArray(children)
-    .filter((child) => React.isValidElement(child))
-    .map((child) => (child as React.ReactElement).props.children)
-    .join('')
+// const MarkdownWithChildren: React.FC<MarkdownWithChildrenProps> = ({
+//   children,
+//   ...restProps
+// }) => {
+//   const content = React.Children.toArray(children)
+//     .filter((child) => React.isValidElement(child))
+//     .map((child) => (child as React.ReactElement).props.children)
+//     .join('')
 
-  const markdownProps: MarkdownWithChildrenProps = {
-    children,
-    ...restProps,
-  }
+//   const markdownProps: MarkdownWithChildrenProps = {
+//     children,
+//     ...restProps,
+//   }
 
-  return <Markdown {...markdownProps} />
-}
+//   return <Markdown {...markdownProps} />
+// }
 
 interface ContentContainerProps {
   varient?: 'primary' | 'default'
@@ -75,7 +75,8 @@ const ContentContainer = ({
           {content}
         </EditAbleText>
       ) : (
-        <MarkdownWithChildren>{content}</MarkdownWithChildren>
+        // <MarkdownWithChildren>{content}</MarkdownWithChildren>
+        <Text>{content}</Text>
       )}
     </View>
   )
