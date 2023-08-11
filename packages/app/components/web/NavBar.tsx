@@ -3,6 +3,7 @@ import { View, Text } from 'app/design/styled'
 import useTheme from 'app/design/theming/useTheme'
 import clsx from 'clsx'
 import { Hoverable } from '../Themed'
+import { HeroOutline } from '@nandorojo/heroicons'
 
 type NavProps = {
   onHamberge?: () => void
@@ -17,10 +18,10 @@ const Nav = ({ onHamberge }: NavProps) => {
   function NavItem({ name }: { name: string }) {
     return (
       // <Link href="/(tabs)/course">
-      <Hoverable
-        className="h-20 items-center justify-between"
-        dc="bg-gray-200 rounded-lg p-1"
-        hoveredStyle="bg-blue-200"
+      <View
+        className="h-20 items-center justify-between rounded-lg bg-gray-200 p-1 hover:bg-blue-200"
+        // dc="bg-gray-200 rounded-lg p-1"
+        // hoveredStyle="bg-blue-200"
       >
         {/* <MaterialCommunityIcons
               size={24}
@@ -28,8 +29,11 @@ const Nav = ({ onHamberge }: NavProps) => {
               name={name == 'Course' ? 'book' : 'home'}
               color={color.onSurface}
             /> */}
-        <Text style={{ color: color.onSurface }}>{name}</Text>
-      </Hoverable>
+
+        <HeroOutline.Bookmark color={'red'} />
+
+        <Text className="text-black">{name}</Text>
+      </View>
       // </Link>
     )
   }
@@ -66,6 +70,7 @@ const Nav = ({ onHamberge }: NavProps) => {
           iconColor={color.onSurface}
           onPress={onHamberge}
         /> */}
+        <HeroOutline.Home />
       </View>
     </>
   )

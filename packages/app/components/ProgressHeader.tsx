@@ -1,7 +1,6 @@
 import { TouchableWithoutFeedback, View, Text, Pressable } from 'react-native'
 import { withExpoSnack, styled } from 'nativewind'
-import { Close, Rewind } from '@nandorojo/iconic'
-
+import { HeroOutline } from '@nandorojo/heroicons'
 import { cLesson1, cLesson2, cLesson3 } from 'app/services/storage/c'
 import { useAppSelector } from 'app/services/hooks/hook'
 import useTheme from 'app/design/theming/useTheme'
@@ -40,9 +39,7 @@ function ProgessHeader() {
     )
     return (
       // <Link href="/" asChild>
-      // <Iconic.Close />
-      // <Close />
-      <Text>hi</Text>
+      <HeroOutline.Clock />
       // {/* </Link> */}
     )
   }
@@ -118,7 +115,9 @@ export const ScoreComponent: React.FC<ScoreComponentProps> = ({ color }) => {
       <Text className=" text-base" style={{ color: color }}>
         0
       </Text>
-      <View className="mr-1 lg:mr-6">{/* <Iconic.Globe /> */}</View>
+      <View className="mr-1 lg:mr-6">
+        <HeroOutline.AcademicCap />
+      </View>
     </View>
   )
 }

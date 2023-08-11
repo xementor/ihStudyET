@@ -2,11 +2,7 @@ import { createParam } from 'solito'
 import { TextLink } from 'solito/link'
 import { Text } from 'app/design/typography'
 import { View } from 'app/design/styled'
-import * as React from 'react'
 import Svg, { Circle, Rect } from 'react-native-svg'
-// import { AnnotationDots } from '@nandorojo/iconic'
-import { Plus } from '@tamagui/lucide-icons'
-// export const Icon = () => <HeroOutline.AcademicCap />
 
 const { useParam } = createParam<{ id: string }>()
 
@@ -18,6 +14,7 @@ export function UserDetailScreen() {
       <Text className="mb-4 text-center font-bold">{`User ID: ${id}`}</Text>
       <TextLink href="/">👈 Go Home</TextLink>
       {/* <Plus /> */}
+      <View className="h-10 w-10 bg-red-200 hover:bg-blue-200 md:h-20 md:w-20" />
       <SvgComponent />
     </View>
   )

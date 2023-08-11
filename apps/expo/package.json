@@ -1,8 +1,6 @@
 {
   "dependencies": {
     "@nandorojo/heroicons": "^0.0.5",
-    "@nandorojo/iconic": "^0.0.1",
-    "@tamagui/lucide-icons": "^1.52.1",
     "app": "*",
     "expo": "^49.0.0",
     "expo-constants": "~14.4.2",

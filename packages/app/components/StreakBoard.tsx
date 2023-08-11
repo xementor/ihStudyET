@@ -1,7 +1,6 @@
 import { View, Text } from 'app/design/styled'
 import { ScoreComponent } from './ProgressHeader'
-import colors from 'tailwindcss/colors'
-import { AnnotationDots } from '@nandorojo/iconic'
+import { HeroOutline } from '@nandorojo/heroicons'
 
 export default function StreakBoard({}) {
   return (
@@ -40,9 +39,7 @@ function StreakDay({ day, isStreak }: { day: String; isStreak?: boolean }) {
   return (
     <View className={className}>
       <Text>{day}</Text>
-      {/* <AnnotationDots /> */}
-
-      {/* <FontAwesome name="bolt" size={25} color={colors.slate[400]} /> */}
+      <HeroOutline.Bolt />
     </View>
   )
 }
