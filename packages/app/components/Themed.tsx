@@ -13,7 +13,7 @@ import {
 import { DarkTheme, DefaultTheme } from 'app/design/Colors'
 import React, { useState } from 'react'
 import { styled } from 'nativewind'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 type ThemeProps = {
   lightColor?: string

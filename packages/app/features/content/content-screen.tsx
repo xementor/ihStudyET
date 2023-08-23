@@ -25,7 +25,7 @@ import YoutubeVideo from 'app/components/YoutubeVideo'
 import EditAbleText from 'app/components/EditableText'
 import { addNewTextContent, updateLessonTitle } from 'app/store/editLesson'
 import { Button, IconButton } from 'react-native-paper'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import AddContent from 'app/components/AddContent'
 
 function ContentScreen() {

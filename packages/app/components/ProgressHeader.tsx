@@ -1,12 +1,11 @@
-import { TouchableWithoutFeedback, View, Text, Pressable } from 'react-native'
-import { withExpoSnack, styled } from 'nativewind'
+import { TouchableWithoutFeedback } from 'react-native'
+import { View, Text, Pressable } from 'app/design/styled'
+import { withExpoSnack } from 'nativewind'
 import { HeroOutline } from '@nandorojo/heroicons'
-import { cLesson1, cLesson2, cLesson3 } from 'app/services/storage/c'
 import { useAppSelector } from 'app/services/hooks/hook'
 import useTheme from 'app/design/theming/useTheme'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { showSheet } from 'app/store/contentsBottomSheet'
-import { ColorType } from 'app/design/theming/types'
 // import { Link } from 'expo-router'
 
 interface IconButtonProps {
@@ -39,7 +38,7 @@ function ProgessHeader() {
     )
     return (
       // <Link href="/" asChild>
-      <HeroOutline.Clock />
+      <HeroOutline.Clock className="className" />
       // {/* </Link> */}
     )
   }

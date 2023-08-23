@@ -36,7 +36,7 @@ const CoursesScreen = () => {
     <>
       {Platform.OS === 'web' && (
         <>
-          <Nav onHamberge={toggleModal} />
+          {/* <Nav onHamberge={toggleModal} /> */}
           <>
             {/* <Portal>
               <StyledModal
@@ -52,7 +52,8 @@ const CoursesScreen = () => {
         </>
       )}
 
-      <View className="p-2 md:p-10">
+      <View className="md:p-10">
+        <Nav />
         {user && <Text>{user.email}</Text>}
         <StreakBoard />
         <Text className="my-4 text-2xl font-bold">Your course history</Text>

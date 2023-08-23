@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import { CardButton } from './CardQuiz'
 import { PromptType } from 'app/services/storage/model'
 import { useState } from 'react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import EditAbleText from './EditableText'
 import { useAppDispatch, useAppSelector } from 'app/services/hooks/hook'
 import { IconButton } from 'react-native-paper'
@@ -34,7 +34,7 @@ export default function Prompt({ prompt, ids }: PromptProps) {
       setSelectedOption((prev) => [...prev, i])
     }
     setSelected(i)
-    setExp(options[i].explaination)
+    setExp(options[i]!.explaination)
   }
 
   const handleAdd = () => {

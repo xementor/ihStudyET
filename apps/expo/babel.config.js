@@ -4,8 +4,9 @@ module.exports = function (api) {
     presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }]],
     plugins: [
       'react-native-reanimated/plugin',
-      'nativewind/babel',
+      require.resolve('nativewind/babel'),
       // required for expo router.
+      // "expo-router/babel",
       require.resolve("expo-router/babel")
     ],
   }

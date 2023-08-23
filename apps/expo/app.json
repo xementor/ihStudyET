@@ -6,10 +6,14 @@
     "scheme": "solito-nativewind",
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "web"
     ],
     "ios": {
       "bundleIdentifier": "com.solito.nativewind"
+    },
+    "web": {
+      "bundler": "metro"
     }
   }
 }

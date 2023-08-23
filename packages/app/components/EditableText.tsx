@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { TextInput, TouchableOpacity, Text as RNText } from 'react-native'
+import { clsx } from 'clsx'
 import { View, Text } from 'app/design/styled'
 
 export default function EditAbleText({

@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/services/hooks/hook'
 import { ContentType } from 'app/services/storage/model'
 import { addNewMCQ, addNewTextContent, addPrompt } from 'app/store/editLesson'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { useState } from 'react'
 import { View, Pressable, Text } from 'react-native'
 import { IconButton } from 'react-native-paper'

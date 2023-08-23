@@ -3,8 +3,10 @@
   "name": "app",
   "main": "index.ts",
   "dependencies": {
+    "@nandorojo/heroicons": "^0.0.5",
     "@reduxjs/toolkit": "^1.9.5",
     "clsx": "^2.0.0",
+    "clx": "^1.0.0",
     "firebase": "^10.1.0",
     "moti": "latest",
     "nativewind": "2.0.11",

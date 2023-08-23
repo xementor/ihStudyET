@@ -6,7 +6,7 @@ import {
   updateMCQQuestion,
   updateMCQanswer,
 } from 'app/store/editLesson'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { GestureResponderEvent, Pressable, Text, View } from 'react-native'
