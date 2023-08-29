@@ -22,7 +22,7 @@ import EditAbleText from 'app/components/EditableText'
 import { updateLessonTitle } from 'app/store/editLesson'
 import AddContent from 'app/components/AddContent'
 
-function ContentScreen() {
+export function ContentScreen() {
   const [showButton, setShowButton] = useState(true)
   const [showHint, setHint] = useState(true)
   const scrollViewRef = useRef<ScrollView>(null)
@@ -158,5 +158,3 @@ function ContentScreen() {
     } else return <Text>no content</Text>
   }
 }
-
-export default withExpoSnack(ContentScreen)

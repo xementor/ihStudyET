@@ -1,69 +1,60 @@
-import { A, H1, P, Text, TextLink } from 'app/design/typography'
-import { Row } from 'app/design/layout'
-import { View } from 'app/design/view'
+import React, { useRef, useState } from 'react'
+import { View, Text } from 'app/design/styled'
+import { Platform } from 'react-native'
+import { styled } from 'nativewind'
 
-import { MotiLink } from 'solito/moti'
+import CourseCover from 'app/components/CourseCover'
+import Nav from 'app/components/web/NavBar'
+import StreakBoard from 'app/components/StreakBoard'
+import { useAppSelector } from 'app/services/hooks/hook'
+import LoginScreen from 'app/features/auth/login/login-screen'
 
-export function HomeScreen() {
+export const HomeScreen = () => {
+  const [loading, setLoading] = useState(true)
+  const { user } = useAppSelector((state) => state.user)
+
+  const [visible, setVisible] = React.useState(false)
+
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+  const toggleModal = () => setVisible(!visible)
+  const containerStyle = { backgroundColor: 'white', padding: 20, top: 10 }
+
+  const targetRef = useRef(null)
+
+  // if (!user) {
+  //   return <LoginScreen />
+  // }
+
   return (
-    <View className="flex-1 items-center justify-center p-3">
-      <H1>Welcome to Solito.</H1>
-      <View className="max-w-xl">
-        <P className="text-center">
-          Here is a basic starter to show you how you can navigate from one
-          screen to another. This screen uses the same code on Next.js and React
-          Native.
-        </P>
-        <P className="text-center">
-          Solito is made by{' '}
-          <A
-            href="https://twitter.com/fernandotherojo"
-            hrefAttrs={{
-              target: '_blank',
-              rel: 'noreferrer',
-            }}
-          >
-            Fernando Rojo
-          </A>
-          .
-        </P>
-        <P className="text-center">
-          NativeWind is made by{' '}
-          <A
-            href="https://twitter.com/mark__lawlor"
-            hrefAttrs={{
-              target: '_blank',
-              rel: 'noreferrer',
-            }}
-          >
-            Mark Lawlor
-          </A>
-          .
-        </P>
-      </View>
-      <View className="h-[32px]" />
-      <Row className="space-x-8">
-        <TextLink href="/user/fernando">Regular Link</TextLink>
-        <MotiLink
-          href="/user/fernando"
-          animate={({ hovered, pressed }) => {
-            'worklet'
+    <>
+      {Platform.OS === 'web' && (
+        <>
+          <Nav onHamberge={toggleModal} />
+          <>
+            {/* <Portal>
+              <StyledModal
+                visible={visible}
+                onDismiss={hideModal}
+                className="absolute  top-[-200px] w-80 flex-none"
+                contentContainerStyle={containerStyle}
+              >
+                <Text>Example Modal. Click outside this area to dismiss.</Text>
+              </StyledModal>
+            </Portal> */}
+          </>
+        </>
+      )}
 
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Moti Link
-          </Text>
-        </MotiLink>
-      </Row>
-    </View>
+      <View className="md:p-10">
+        {user && <Text>{user.email}</Text>}
+        <StreakBoard />
+        <Text className="my-4 text-2xl font-bold">Your course history</Text>
+
+        {/* <View className="flex flex-row flex-wrap"> */}
+        <CourseCover hasButton={true} />
+        {/* </View> */}
+      </View>
+    </>
   )
 }

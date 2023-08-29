@@ -31,4 +31,4 @@ const AppButton = ({ content, type, onPress }: AppButtonProps) => {
   )
 }
 
-export default withExpoSnack(AppButton)
+export default AppButton

@@ -63,4 +63,4 @@ function AddContent({ lid }: { lid: number }) {
   }
 }
 
-export default withExpoSnack(AddContent)
+export default AddContent
